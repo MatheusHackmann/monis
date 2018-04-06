@@ -1,0 +1,26 @@
+body{
+	background-color: #f5f7f8 !important;
+}
+
+.bg-fundo {
+	margin-top: 50px;
+}
+
+.form-registros {
+	background-color: #fff;
+	border-radius: 7px;
+	box-shadow: 0px 0px 5px #4d636f !important;
+	padding: 20px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+.bg-modify {
+	background-color: #4d636f !important;
+}
+.bg-modify a {
+	color: #fff;
+}
+.btn-modify {
+	color: #fff;
+	background-color: #3a4b53 !important;
+}
