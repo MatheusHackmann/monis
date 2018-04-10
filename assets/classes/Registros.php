@@ -30,30 +30,32 @@ class Registros{
 
 		$sql = new Sql();
 
-		$nmrRegistro = $this->nmrRegistro."/".$this->anoRegistro;
-
-		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO;", 
+		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
 			$param = array(
-				":EXISTE_REGISTRO" => $nmrRegistro
+				":EXISTE_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro
 			));
 		
-		if (!count($existeRegistro)>0) {
+		if (count($existeRegistro) == 0) {
 			$sql->query("INSERT INTO " . $this->nomeTabela . " (
-				numero_registro, 
+				numero_registro,
+				ano_registro, 
 				data_registro,
 				assunto, 
 				numero_protocolo, 
 				imagem
 			) 
 			VALUES (
-				:NMR_REGISTRO, 
+				:NMR_REGISTRO,
+				:ANO_REGISTRO, 
 				:DATA, 
 				:ASSUNTO, 
 				:NMR_PROTOCOLO, 
 				:IMAGEM
 			);", 
 			$params = array(
-				":NMR_REGISTRO" => utf8_decode($nmrRegistro),
+				":NMR_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro,
 				":DATA" => utf8_decode($data),
 				":ASSUNTO" => utf8_decode($assunto),
 				":NMR_PROTOCOLO" => utf8_decode($nmrProtocolo),
@@ -182,13 +184,12 @@ class Registros{
 		//Verifica se existe o Número do Registro já está cadastrado, caso sim, não cria a pasta nem o registro
 		$sql = new Sql();
 
-		$nmrRegistro = $this->nmrRegistro."/".$this->anoRegistro;
-
 		$nomePasta = $this->nmrRegistro.$this->anoRegistro;
 
-		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO;", 
+		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
 			$param = array(
-				":EXISTE_REGISTRO" => $nmrRegistro
+				":EXISTE_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro
 			));	
 
 		if (count($existeRegistro) == 0) {
@@ -222,21 +223,32 @@ class Registros{
 	{
 		$sql = new Sql();
 
-		$registros = $sql->select("SELECT * FROM " . $this->nomeTabela . " WHERE numero_registro = :NMR_REGISTRO", 
+		$registros = $sql->select("SELECT * FROM " . $this->nomeTabela . " WHERE numero_registro = :NMR_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
 			$param = array(
-				":NMR_REGISTRO" => $this->nmrRegistro
+				":NMR_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro
 			));
 
-		if (!count($registros) > 0)  {
+		foreach ($registros as $registro) {
+
+		}
+		return $registro;
+	}
+
+	public function buscarRegistro()
+	{
+		$sql = new Sql();
+
+		$registros = $sql->select("SELECT * FROM " . $this->nomeTabela . " WHERE numero_registro LIKE '".$this->nmrRegistro."%' ORDER BY numero_registro ASC;");
+
+		if (count($registros) == 0)  {
 			$nenhumRegistro = true;
 			return $nenhumRegistro;
 			exit();
 		}
 		else {
-			foreach ($registros as $registro) {
-			}
-			return $registro;		
-		}	
+			return $registros;	
+		}		
 	}
 
 
@@ -246,7 +258,7 @@ class Registros{
 
 		$todosRegistros = $sql->select("SELECT * FROM ".$this->nomeTabela." ORDER BY numero_registro ASC;");
 
-		if (!count($todosRegistros) > 0)  {
+		if (count($todosRegistros) == 0)  {
 			$nenhumRegistro = true;
 			return $nenhumRegistro;
 			exit();
@@ -257,17 +269,18 @@ class Registros{
 	}
 
 
-	public function excluirRegistro($nmrRegistro)
+	public function excluirRegistro($nmrRegistro, $anoRegistro)
 	{
-		$dir = "../images/".$this->nomeTabela."/".$nmrRegistro;
+		$dir = "../images/".$this->nomeTabela."/".$nmrRegistro.$anoRegistro;
 
 		exec(sprintf("rd /s /q %s", escapeshellarg($dir)));
 
 		$sql = new Sql();
 
-		$sql->select("DELETE FROM " . $this->nomeTabela . " WHERE numero_registro = :NMR_REGISTRO", 
+		$sql->select("DELETE FROM " . $this->nomeTabela . " WHERE numero_registro = :NMR_REGISTRO AND ano_registro = :ANO_REGISTRO", 
 			$param = array(
-				":NMR_REGISTRO" => $nmrRegistro
+				":NMR_REGISTRO" => $nmrRegistro,
+				":ANO_REGISTRO" => $anoRegistro
 			));
 	}
 

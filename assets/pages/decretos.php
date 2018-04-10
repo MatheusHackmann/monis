@@ -49,7 +49,7 @@ if ($_POST) {
 				
 				<div class="row">
 					<div class="form-group col-2">
-						<label for="id_numero_decreto">Nº decreto: </label>
+						<label for="id_numero_decreto">Nº Decreto: </label>
 						<input class="form-control" type="text" name="numero_decreto" id="id_numero_decreto" required autocomplete="off" placeholder="Apenas números" pattern="[0-9]+$">
 					</div>					
 					<div class="form-group col-1">

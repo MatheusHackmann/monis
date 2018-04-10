@@ -1,5 +1,4 @@
 <?php require_once("header.php"); ?>
-
 <?php 
 
 require_once("../classes/Registros.php");
@@ -50,7 +49,7 @@ if ($_POST) {
 
 				<div class="row">
 					<div class="form-group col-2">
-						<label for="id_numero_portaria">Nº portaria: </label>
+						<label for="id_numero_portaria">Nº Portaria: </label>
 						<input class="form-control" type="text" name="numero_portaria" id="id_numero_portaria" required autocomplete="off" placeholder="Apenas números" pattern="[0-9]+$">
 					</div>					
 					<div class="form-group col-1">

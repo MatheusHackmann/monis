@@ -24,7 +24,7 @@
 	<div class="row">
 		<div class="offset-2 col-2">
 			<form action="buscar_leis.php" method="post" class="py-4">
-				<input class="form-control" type="text" name="buscarLei" placeholder="Buscar Leis" autocomplete="off">	
+				<input class="form-control" type="text" name="buscarLei" placeholder="Buscar Leis" autocomplete="off" pattern="[0-9]+$">	
 				<div class="dropdown-divider"></div>
 				<button class="btn btn-primary">Buscar</button>
 			</form>
@@ -53,18 +53,7 @@
 					";					
 				}
 				else{
-					$suffix = "...";
-
-					echo "
-					<div class='col-4'>
-					<div class='alert alert-success alert-dismissible fade show' role='alert'>
-					<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-					<span aria-hidden='true'>&times;</span>
-					</button>
-					".count($registro)." registro(s) encontrados.
-					</div>
-					</div>			
-					";		
+					$suffix = "...";		
 
 					echo "<div class='col-12 bg-registros'>";				
 
@@ -83,11 +72,13 @@
 						$assunto = substr($registro[$i]['assunto'], 0, 150 + 1) . $suffix;
 						$data = date("d/m/Y", strtotime($registro[$i]['data_registro']));
 
-						
+						$nmrRegistro = $registro[$i]['numero_registro'];
+						$anoRegistro = $registro[$i]['ano_registro'];
+
 
 						echo "
 						<tr>
-						<td>".$registro[$i]['numero_registro']."</td>
+						<td>"."<a href='buscar_registro.php?buscar=Lei&nomeTabela=leis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
@@ -98,13 +89,13 @@
 					echo "
 					</table>
 					</div>";				
-				}					
-			}
+				}
+			}					
 			else if ($_POST && $_POST['buscarLei'] != "") {
-				$buscarLei = new Registros();
-				$buscarLei->setTabela("leis");
-				$buscarLei->setNmrRegistro($_POST['buscarLei']);
-				$registro = $buscarLei->buscarRegistros(); 
+				$todasAsLeis = new Registros();
+				$todasAsLeis->setTabela("leis");
+				$todasAsLeis->setNmrRegistro($_POST['buscarLei']);
+				$registro = $todasAsLeis->buscarRegistro();	
 
 				if ($registro === true) {
 					echo "
@@ -112,66 +103,52 @@
 					<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 					<span aria-hidden='true'>&times;</span>
 					</button>
-					Não há nenhum cadastro com esse número de registro!
+					Não há nenhum registro com esse número cadastrado!
 					</div>
 					";					
-				}else{
-					$imagem = explode(";", $registro['imagem']);
-					echo "
-					<div class='col-12 bg-registros'>";
+				}
+				else{
+					$suffix = "...";		
+
+					echo "<div class='col-12 bg-registros'>";				
 
 					echo "
-					<p><strong>Nº DE REGISTRO</strong>: ".$registro['numero_registro']."</p>
-					<p><strong>DATA</strong>: ".date("d/m/Y", strtotime($registro['data_registro']))."</p>
-					<p><strong>ASSUNTO</strong>: ".utf8_encode($registro['assunto'])."</p>
-					<p><strong>PROTOCOLO</strong>: ".$registro['numero_protocolo']."</p>";
+					<table class='table table-striped' style='text-align: center;'>
 
-					echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong'>
-					Ver Documentos
-					</button>
-
-					<!-- Modal -->
-					<div class='modal fade' id='exampleModalLong' tabindex='-1' role='dialog' aria-labelledby='exampleModalLongTitle' aria-hidden='true'>
-					<div class='modal-dialog' role='document'>
-					<div class='modal-content'>
-					<div class='modal-body' style='text-align: center;'>
+					<tr>
+					<th>Nº Registro</th>
+					<th>Data Registro</th>
+					<th>Assunto</th>
+					<th>Nº Protocolo</th>
+					</tr>	
 					";
 
-					for ($i=0; $i < count($imagem); $i++) { 
-						
+					for ($i=0; $i < count($registro); $i++) { 
+						$assunto = substr($registro[$i]['assunto'], 0, 150 + 1) . $suffix;
+						$data = date("d/m/Y", strtotime($registro[$i]['data_registro']));
+
+						$nmrRegistro = $registro[$i]['numero_registro'];
+						$anoRegistro = $registro[$i]['ano_registro'];
+
+
 						echo "
-						<a href='../images/leis/".$registro['numero_registro']."/".$imagem[$i]."' target='_blank'><img src='../images/leis/".$registro['numero_registro']."/".$imagem[$i]."'
-						class='img-fluid img-registros'>
-						</a>
+						<tr>
+						<td>"."<a href='buscar_registro.php?buscar=Lei&nomeTabela=leis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>".$data."</td>	
+						<td>".$assunto."</td>
+						<td>".$registro[$i]['numero_protocolo']."</td>
+						</tr>
 						";
 
-					}
-
+					}	
 					echo "
-					</div>
-					</div>
-					</div>
-					</div>";
-
-					//Deletar Registro
-					echo "<button class='btn btn-danger' onclick='confirmDelete(".$_POST['buscarLei'].")'>Deletar Registro</button>";					
-				}		
-			}
+					</table>
+					</div>";				
+				}
+			}					
 			?>			
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	function confirmDelete(nmrRegistro) {
-		var deletar = confirm("Excluir arquivo ?");
-
-		if (deletar) {
-			location.href = 'excluir_registro.php?nome_tabela=leis&nmr_registro='+nmrRegistro;
-		} else {
-
-		}
-	}
-</script>
 
 <?php require_once("footer.php") ?>

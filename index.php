@@ -16,38 +16,44 @@
 		<div class="row">
 			<div class="offset-4 col-4" style="margin-top: 200px;">
 				<form class="form-control" action="index.php" method="post">
+
 					<div class="form-group">
 						<label for="idUsuario">Usuário: </label>
-						<input class="form-control" type="text" name="usuario" id="idUsuario" autocomplete="off">
+						<input class="form-control" type="text" name="usuario" id="idUsuario" autocomplete="off" required>
 					</div>
 
 					<div class="form-group">
 						<label for="idSenha">Senha: </label>
-						<input class="form-control" type="password" name="senha" id="idSenha">
+						<input class="form-control" type="password" name="senha" id="idSenha" required>
 					</div>
 					<button class="btn btn-primary" type="submit">Entrar</button>
 
-					<?php require_once("assets/classes/User.php");
+					<div class="row" style="margin-top: 10px;">
+						<div class="col-12">
+							<?php require_once("assets/classes/User.php");
 
-					if ($_POST) {						
-						$login = new User();
-						$login->setData($_POST['usuario'], $_POST['senha']);
-						$logar = $login->validarUsuario();
+							if ($_POST) {						
+								$login = new User();
+								$login->setData($_POST['usuario'], $_POST['senha']);
+								$logar = $login->validarUsuario();
 
-						if ($logar == false) {
-							echo "
-							<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-							<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-							<span aria-hidden='true'>&times;</span>
-							</button>
-							Usuário ou senha inválido!
-							</div>
-							";	
+								if ($logar == false) {
+									echo "
+									<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+									<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+									<span aria-hidden='true'>&times;</span>
+									</button>
+									Usuário ou senha inválido!
+									</div>
+									";	
 
-							exit();						
-						}						
-					}
-					?>
+									exit();						
+								}						
+							}
+							?>						
+						</div>	
+					</div>				
+
 				</form>				
 			</div>
 		</div>
