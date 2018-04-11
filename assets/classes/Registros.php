@@ -75,16 +75,16 @@ class Registros{
 		
 		$sql = new Sql();
 
-		$nmrRegistro = $this->nmrRegistro."/".$this->anoRegistro;
-
-		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO;", 
+		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
 			$param = array(
-				":EXISTE_REGISTRO" => $nmrRegistro
+				":EXISTE_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro
 			));
 		
-		if (!count($existeRegistro)>0) {
+		if (count($existeRegistro) == 0) {
 			$sql->query("INSERT INTO " . $this->nomeTabela . " (
 				numero_registro, 
+				ano_registro,
 				data_registro,
 				data_recebida,
 				assunto, 
@@ -96,6 +96,7 @@ class Registros{
 			) 
 			VALUES (
 				:NMR_REGISTRO, 
+				:ANO_REGISTRO,
 				:DATA_REGISTRO,
 				:DATA_RECEBIDA, 
 				:ASSUNTO, 
@@ -106,13 +107,14 @@ class Registros{
 				:IMAGEM
 			);", 
 			$params = array(
-				":NMR_REGISTRO" => utf8_decode($nmrRegistro),
+				":NMR_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro,
 				":DATA_REGISTRO" => utf8_decode($dataRegistro),
 				":DATA_RECEBIDA" => utf8_decode($dataRecebida),
 				":ASSUNTO" => utf8_decode($assunto),
 				":VEREADORES" => utf8_decode($vereadores),
 				":SECRETARIAS" => utf8_decode($secs),
-				":NMR_PROTOCOLO" => utf8_decode($numeroProtocolo),
+				":NMR_PROTOCOLO" => $numeroProtocolo,
 				"DATA_ENVIO" => utf8_decode($dataEnvio),
 				":IMAGEM" => utf8_decode($this->foto)
 			));	
@@ -128,17 +130,16 @@ class Registros{
 		
 		$sql = new Sql();
 
-		$nmrRegistro = $this->nmrRegistro."/".$this->anoRegistro;
-
-
-		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO;", 
+		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
 			$param = array(
-				":EXISTE_REGISTRO" => $nmrRegistro
+				":EXISTE_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro
 			));
 		
 		if (!count($existeRegistro)>0) {
 			$sql->query("INSERT INTO " . $this->nomeTabela . " (
 				numero_registro, 
+				ano_registro,
 				data_registro,
 				data_recebida,
 				assunto, 
@@ -150,6 +151,7 @@ class Registros{
 			) 
 			VALUES (
 				:NMR_REGISTRO, 
+				:ANO_REGISTRO,
 				:DATA_REGISTRO,
 				:DATA_RECEBIDA, 
 				:ASSUNTO, 
@@ -160,14 +162,15 @@ class Registros{
 				:IMAGEM
 			);", 
 			$params = array(
-				":NMR_REGISTRO" => utf8_decode($nmrRegistro),
-				":DATA_REGISTRO" => utf8_decode($dataRegistro),
-				":DATA_RECEBIDA" => utf8_decode($dataRecebida),
+				":NMR_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro,
+				":DATA_REGISTRO" => $dataRegistro,
+				":DATA_RECEBIDA" => $dataRecebida,
 				":ASSUNTO" => utf8_decode($assunto),
 				":ORIGEM" => utf8_decode($origem),
 				":DESTINO" => utf8_decode($destino),
-				"DATA_ENVIO" => utf8_decode($dataEnvio),
-				":DATA_RESPONDER" => utf8_decode($dataResponder),
+				"DATA_ENVIO" => $dataEnvio,
+				":DATA_RESPONDER" => $dataResponder,
 				":IMAGEM" => utf8_decode($this->foto)
 			));	
 

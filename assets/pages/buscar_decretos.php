@@ -78,7 +78,7 @@
 
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registro.php?buscar=Decreto&nomeTabela=decretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Decreto&nomeTabela=decretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
@@ -133,7 +133,7 @@
 
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registro.php?buscar=Decreto&nomeTabela=decretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Decreto&nomeTabela=decretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>

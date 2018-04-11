@@ -1,5 +1,18 @@
 <?php require_once("header.php"); ?>
 
+<?php
+if ($_POST) {
+	require_once("../classes/Registros.php");
+	$cadastroDeRequerimento = new Registros();
+
+	$cadastroDeRequerimento->setTabela("requerimentos");
+	$cadastroDeRequerimento->setNmrRegistro($_POST['numero_requerimento']);
+	$cadastroDeRequerimento->setAnoRegistro($_POST['ano_requerimento']);
+	$registroExiste = $cadastroDeRequerimento->cadImagem($_FILES['imagem']);
+	$cadastradoSucesso = $cadastroDeRequerimento->novoCadastroRI($_POST['data_requerimento'], $_POST['data_recebida'], $_POST['assunto_requerimento'], $_POST['vereadores'], $_POST['secs'], $_POST['numero_protocolo'], $_POST['data_envio']);	
+}
+?>
+
 <div class="container-fluid bg-fundo">
 	<div class="row">
 		<div class="col-1"></div>
@@ -8,17 +21,7 @@
 				<div class="row">
 					<div class="col-12">
 						<?php
-						if ($_POST) {
-							require_once("../classes/Registros.php");
-							$cadastroDeRequerimento = new Registros();
-
-							$cadastroDeRequerimento->setTabela("requerimentos");
-							$cadastroDeRequerimento->setNmrRegistro($_POST['numero_requerimento']);
-							$cadastroDeRequerimento->setAnoRegistro($_POST['ano_requerimento']);
-							$registroExiste = $cadastroDeRequerimento->cadImagem($_FILES['imagem']);
-							$cadastradoSucesso = $cadastroDeRequerimento->novoCadastroRI($_POST['data_requerimento'], $_POST['data_recebida'], $_POST['assunto_requerimento'], $_POST['vereadores'], $_POST['secs'], $_POST['numero_protocolo'], $_POST['data_envio']);		
-
-
+						if ($_POST) {	
 							if ($cadastradoSucesso != "") {
 								echo "
 								<div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -115,9 +118,9 @@
 
 					<div class="col-2">
 						<label for="">Nº Protocolo Geral: </label>
-						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off">
+						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
 					</div>
-					
+
 					<div class="offset-2 col-6">
 						<label>Anexar Imagem</label>
 						<input class="form-control" type="file" name="imagem[]" multiple required> <!-- MULTIPLE -->
@@ -129,7 +132,7 @@
 						<div class="dropdown-divider"></div>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-1">
 						<button class="btn btn-success" type="submit">Cadastrar</button>

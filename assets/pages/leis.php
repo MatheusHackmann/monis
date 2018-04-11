@@ -76,7 +76,7 @@ if ($_POST) {
 				<div class="row">
 					<div class="col-2">
 						<label for="">Nº Protocolo: </label>
-						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off">
+						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
 					</div>
 					<div class="offset-4 col-6">
 						<label>Anexar Imagem</label>

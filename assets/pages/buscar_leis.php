@@ -75,10 +75,9 @@
 						$nmrRegistro = $registro[$i]['numero_registro'];
 						$anoRegistro = $registro[$i]['ano_registro'];
 
-
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registro.php?buscar=Lei&nomeTabela=leis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Lei&nomeTabela=leis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
@@ -133,7 +132,7 @@
 
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registro.php?buscar=Lei&nomeTabela=leis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Lei&nomeTabela=leis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
