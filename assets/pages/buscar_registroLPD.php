@@ -15,8 +15,6 @@
 	border-radius: 5px;
 	text-align: justify; 
 	background-color: #fff;
-	height: 60vh; 
-	overflow: auto;
 }
 </style>
 

@@ -14,22 +14,18 @@ if (!$_SESSION['usuario']) {
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
-	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
-	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../js/popper.min.js"></script>
+	<link rel="stylesheet" href="../icons/css/fa-svg-with-js.css">
 </head>
 <body>
-	<nav class="navbar fixed-top navbar-toggleable-sm navbar-expand-lg bg-modify">
-
+	<nav class="navbar fixed-top navbar-expand-lg bg-modify">
+		<a class="navbar-brand" href="#">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
+			<i class="fas fa-bars" style="color: #fff;"></i>
 		</button>
 
+
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="nav">
-				<li class="nav-item">
-					<a href="index.php" class="nav-link">Home</a>
-				</li>					
+			<ul class="nav">					
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Leis

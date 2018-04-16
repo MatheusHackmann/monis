@@ -2,11 +2,11 @@
 
 <div class="container-fluid bg-fundo">
 	<div class="row">
-		<div class="col-1"></div>
-		<div class="col-10 py-5">
+		<div class="col-sm-12 col-md-1 col-lg-1"></div>
+		<div class="col-sm-12 col-md-10 col-lg-10 py-5">
 			<form class="form-registros" enctype="multipart/form-data" method="post">
 				<div class="row">
-					<div class="col-12">
+					<div class="col-12 col-md-12 col-lg-12">
 						<?php
 						if ($_POST) {
 							require_once("../classes/Registros.php");
@@ -44,102 +44,99 @@
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-4">
 						<label for="id_numero_indicacao">Nº Indicação: </label>
 						<input class="form-control" type="text" name="numero_indicacao" id="id_numero_indicacao" required autocomplete="off" placeholder="Apenas números" pattern="[0-9]+$">
 					</div>					
-					<div class="form-group col-1">
+					<div class="form-group col-12 col-md-2 col-lg-1">
 						<label for="id_ano_indicacao">&nbsp</label>
 						<input class="form-control" type="text" name="ano_indicacao" id="id_ano_indicacao" required autocomplete="off" placeholder="Ano" pattern="[0-9]+$">
 					</div>
 				</div>				
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_indicacao">Data Indicação: </label>
 						<input class="form-control" type="date" name="data_indicacao" id="id_data_indicacao" required autocomplete="off">
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_recebida">Data Recebida: </label>
 						<input class="form-control" type="date" name="data_recebida" id="id_data_recebida" required autocomplete="off">
 					</div>	
 				</div>	
 
 				<div class="row">
-					<div class="form-group col-12">
+					<div class="form-group col-12 col-md-12 col-lg-12">
 						<label for="">Assunto: </label>
 						<textarea class="form-control" name="assunto_indicacao" id="id_assunto_indicacao" rows="5" required autocomplete="off" style="resize: none;"></textarea>
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="form-group col-6">
+					<div class="form-group col-12 col-md-8 col-lg-6">
 						<label for="">Vereadores: &nbsp&nbsp&nbsp<span style="color: #6A6A66;"><i><u>ADICIONE ";" (PONTO E VÍRGULA) AO FINAL DE CADA NOME</u></i></span></label>
 						<textarea class="form-control" name="vereadores" id="id_vereadores" rows="2" required autocomplete="off" style="resize: none;"></textarea>
 					</div>	
 				</div>
 
 				<div class="row">
-					<div class="form-group col-12">
+					<div class="form-group col-12 col-md-8 col-lg-6">
 						<label for="idSecs">Secretarias: </label>
 					</div>
-
-					<div class="form-group col-12">
-						<select multiple="multiple" name="secs[]" id="idSecs" size="6" required>
-							<?php
-
-							$secretarias = array('Administração e Recursos Humanos', 'Cultura, Esportes e Lazer', 'Controle Interno E Transparência', 'Comunicação Social', 'Defesa, Proteção e Preservação do Meio Ambiente', 'Educação', 'Financas e Orçamento', 'Gabinete / Vice-Gabinete', 'Governo E Participação Cidadã', 'Habitação', 'Inclusão, Assistência e Desenvolvimento Social', 'Mobilidade Urbana E Rural', 'Obras', 'Planejamento E Gestão Estratégica', 'Procuradoria Geral do Município', 'Saúde', 'Segurança E Defesa Civil', 'Serviços Públicos', 'Trabalho, Emprego E Desenvolvimento Econômico');
-
-							for ($i=0; $i < count($secretarias); $i++) { 
-								echo "
-
-								<option value='".$secretarias[$i]."' style='padding: 5px;'>
-								".$secretarias[$i]."
-								</option>
-								";
-							}
-
-							?>							
-						</select>
-					</div>	
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
-						<label for="id_data_envio">Data De Envio: </label>
-						<input class="form-control" type="date" name="data_envio" id="id_data_envio" required autocomplete="off">
-					</div>						
+				<div class="form-group col-12 col-md-8 col-lg-6">
+					<select multiple="multiple" name="secs[]" id="idSecs" size="6" required>
+						<?php
 
-					<div class="col-2">
-						<label for="">Nº Protocolo: </label>
-						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
-					</div>
-					
-					<div class="offset-2 col-6">
-						<label>Anexar Imagem</label>
-						<input class="form-control" type="file" name="imagem[]" multiple required> <!-- MULTIPLE -->
-					</div>
+						$secretarias = array('Administração e Recursos Humanos', 'Cultura, Esportes e Lazer', 'Controle Interno E Transparência', 'Comunicação Social', 'Defesa, Proteção e Preservação do Meio Ambiente', 'Educação', 'Financas e Orçamento', 'Gabinete / Vice-Gabinete', 'Governo E Participação Cidadã', 'Habitação', 'Inclusão, Assistência e Desenvolvimento Social', 'Mobilidade Urbana E Rural', 'Obras', 'Planejamento E Gestão Estratégica', 'Procuradoria Geral do Município', 'Saúde', 'Segurança E Defesa Civil', 'Serviços Públicos', 'Trabalho, Emprego E Desenvolvimento Econômico');
+
+						for ($i=0; $i < count($secretarias); $i++) { 
+							echo "
+
+							<option value='".$secretarias[$i]."' style='padding: 5px;'>
+							".$secretarias[$i]."
+							</option>
+							";
+						}
+
+						?>							
+					</select>
+				</div>	
+			</div>
+
+			<div class="row">
+				<div class="form-group col-12 col-md-4 col-lg-2">
+					<label for="id_data_envio">Data De Envio: </label>
+					<input class="form-control" type="date" name="data_envio" id="id_data_envio" required autocomplete="off">
+				</div>						
+
+				<div class="col-12 col-md-4 col-lg-2">
+					<label for="">Nº Protocolo: </label>
+					<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
 				</div>
 
-				<div class="row">
-					<div class="col-12">
-						<div class="dropdown-divider"></div>
-					</div>
+				<div class="offset-md-2 col-12 col-md-6 col-lg-6">
+					<label>Anexar Imagem</label>
+					<input class="form-control" type="file" name="imagem[]" accept="image/*" multiple required> <!-- MULTIPLE -->
 				</div>
-				
-				<div class="row">
-					<div class="col-1">
-						<button class="btn btn-success" type="submit">Cadastrar</button>
-					</div>
-				</div>
+			</div>
 
-			</form>
-		</div>
-		<div class="col-1"></div>
+			<div class="row">
+				<div class="col-6 col-md-1 col-lg-1">
+					<div class="dropdown-divider"></div>
+					<button class="btn btn-success" type="submit">Cadastrar</button>
+				</div>
+			</div>
+
+		</form>
 	</div>
+	<div class="col-sm-12 col-md-1 col-lg-1"></div>
+</div>
 </div>
 
 <?php require_once("footer.php"); ?>

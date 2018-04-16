@@ -2,11 +2,11 @@
 
 <div class="container-fluid bg-fundo">
 	<div class="row">
-		<div class="col-1"></div>
-		<div class="col-10 py-5">
+		<div class="col-sm-12 col-md-1 col-lg-1"></div>
+		<div class="col-sm-12 col-md-10 col-lg-10 py-5">
 			<form class="form-registros" enctype="multipart/form-data" method="post">
 				<div class="row">
-					<div class="col-12">
+					<div class="col-12 col-md-12 col-lg-12">
 						<?php
 						if ($_POST) {
 							require_once("../classes/Registros.php");
@@ -44,83 +44,78 @@
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-4">
 						<label for="id_numero_oficio">Ofício - SMGPC Nº </label>
 						<input class="form-control" type="text" name="numero_oficio" id="id_numero_oficio" required autocomplete="off" placeholder="Apenas números" pattern="[0-9]+$">
 					</div>					
-					<div class="form-group col-1">
+					<div class="form-group col-12 col-md-2 col-lg-1">
 						<label for="id_ano_oficio">&nbsp</label>
 						<input class="form-control" type="text" name="ano_oficio" id="id_ano_oficio" required autocomplete="off" placeholder="Ano" pattern="[0-9]+$">
 					</div>
 				</div>	
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_oficio">Data do Ofício: </label>
 						<input class="form-control" type="date" name="data_oficio" id="id_data_oficio" required autocomplete="off">
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_recebida">Data Recebida: </label>
 						<input class="form-control" type="date" name="data_recebida" id="id_data_recebida" required autocomplete="off">
 					</div>	
 				</div>
 
 				<div class="row">
-					<div class="form-group col-12">
+					<div class="form-group col-12 col-md-12 col-lg-12">
 						<label for="">Assunto: </label>
 						<textarea class="form-control" name="assunto_oficio" id="id_assunto_oficio" rows="5" required autocomplete="off" style="resize: none;"></textarea>
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="form-group col-6">
+					<div class="form-group col-12 col-md-6 col-lg-6">
 						<label for="id_origem">Origem: </label>
 						<input class="form-control" type="text" name="origem" id="id_origem" required autocomplete="off">
 					</div>	
 
 
-					<div class="form-group col-6">
+					<div class="form-group col-12 col-md-6 col-lg-6">
 						<label for="id_destino">Destino: </label>
 						<input class="form-control" type="text" name="destino" id="id_destino" required autocomplete="off">
 					</div>
 				</div>				
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_envio">Data De Envio: </label>
 						<input class="form-control" type="date" name="data_envio" id="id_data_envio" required autocomplete="off">
 					</div>	
 
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_responder">Responder Até: </label>
 						<input class="form-control" type="date" name="data_responder" id="id_data_responder" required autocomplete="off">
 					</div>	
 
-					<div class="offset-2 col-6">
+					<div class="col-12 col-md-4 col-lg-6">
 						<label>Anexar Imagem</label>
-						<input class="form-control" type="file" name="imagem[]" multiple required> <!-- MULTIPLE -->
+						<input class="form-control" type="file" name="imagem[]" accept="image/*" multiple required> <!-- MULTIPLE -->
 					</div>
 				</div>
 
 
 				<div class="row">
-					<div class="col-12">
-						<div class="dropdown-divider"></div>
-					</div>
+				<div class="col-6 col-md-1 col-lg-1">
+					<div class="dropdown-divider"></div>
+					<button class="btn btn-success" type="submit">Cadastrar</button>
 				</div>
-				
-				<div class="row">
-					<div class="col-1">
-						<button class="btn btn-success" type="submit">Cadastrar</button>
-					</div>
-				</div>
+			</div>
 
 			</form>
 		</div>
-		<div class="col-1"></div>
+		<div class="col-sm-12 col-md-1 col-lg-1"></div>
 	</div>
 </div>
 

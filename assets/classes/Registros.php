@@ -182,45 +182,45 @@ class Registros{
 
 
 
-	public function cadImagem($imagem)
-	{	
-		//Verifica se existe o Número do Registro já está cadastrado, caso sim, não cria a pasta nem o registro
-		$sql = new Sql();
+	// public function cadImagem($imagem)
+	// {	
+	// 	//Verifica se existe o Número do Registro já está cadastrado, caso sim, não cria a pasta nem o registro
+	// 	$sql = new Sql();
 
-		$nomePasta = $this->nmrRegistro.$this->anoRegistro;
+	// 	$nomePasta = $this->nmrRegistro.$this->anoRegistro;
 
-		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
-			$param = array(
-				":EXISTE_REGISTRO" => $this->nmrRegistro,
-				":ANO_REGISTRO" => $this->anoRegistro
-			));	
+	// 	$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
+	// 		$param = array(
+	// 			":EXISTE_REGISTRO" => $this->nmrRegistro,
+	// 			":ANO_REGISTRO" => $this->anoRegistro
+	// 		));	
 
-		if (count($existeRegistro) == 0) {
-			if (!is_dir($nomePasta)) {
-				mkdir("../images/".$this->nomeTabela."/".$nomePasta, 0777, true);
+	// 	if (count($existeRegistro) == 0) {
+	// 		if (!is_dir($nomePasta)) {
+	// 			mkdir("../images/".$this->nomeTabela."/".$nomePasta, 0777, true);
 
-				for ($i=0; $i < count($imagem['name']); $i++) { 
+	// 			for ($i=0; $i < count($imagem['name']); $i++) { 
 
-					//Analisa qual a extensao da imagem
-					preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $imagem["name"][$i], $ext);
-					//Cria um nome unico pra imagem
-					$nome_imagem[$i] = md5(uniqid(time())) . "." . $ext[1];
-					//Cria o caminho que a foto deve ser gravada
-					$caminho_imagem = "../images/".$this->nomeTabela."/".$nomePasta."/".$nome_imagem[$i];
-					//Grava a foto no caminho
-					move_uploaded_file($imagem["tmp_name"][$i], $caminho_imagem);
+	// 				//Analisa qual a extensao da imagem
+	// 				preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $imagem["name"][$i], $ext);
+	// 				//Cria um nome unico pra imagem
+	// 				$nome_imagem[$i] = md5(uniqid(time())) . "." . $ext[1];
+	// 				//Cria o caminho que a foto deve ser gravada
+	// 				$caminho_imagem = "../images/".$this->nomeTabela."/".$nomePasta."/".$nome_imagem[$i];
+	// 				//Grava a foto no caminho
+	// 				move_uploaded_file($imagem["tmp_name"][$i], $caminho_imagem);
 
-					$this->foto = implode(";", $nome_imagem);
-				}				
-			}	
-		}
-		else{
-			$registroExiste = "Número de Registro já cadastrado!";
-			return $registroExiste;
-			exit();
-		} 	
+	// 				$this->foto = implode(";", $nome_imagem);
+	// 			}				
+	// 		}	
+	// 	}
+	// 	else{
+	// 		$registroExiste = "Número de Registro já cadastrado!";
+	// 		return $registroExiste;
+	// 		exit();
+	// 	} 	
 		
-	}	
+	// }	
 
 	public function buscarRegistros()
 	{
@@ -242,7 +242,7 @@ class Registros{
 	{
 		$sql = new Sql();
 
-		$registros = $sql->select("SELECT * FROM " . $this->nomeTabela . " WHERE numero_registro LIKE '".$this->nmrRegistro."%' ORDER BY numero_registro ASC;");
+		$registros = $sql->select("SELECT * FROM " . $this->nomeTabela . " WHERE numero_registro LIKE '".$this->nmrRegistro."%' ORDER BY data_registro DESC;");
 
 		if (count($registros) == 0)  {
 			$nenhumRegistro = true;
@@ -259,7 +259,7 @@ class Registros{
 	{	
 		$sql = new Sql();
 
-		$todosRegistros = $sql->select("SELECT * FROM ".$this->nomeTabela." ORDER BY numero_registro ASC;");
+		$todosRegistros = $sql->select("SELECT * FROM ".$this->nomeTabela." ORDER BY data_registro DESC;");
 
 		if (count($todosRegistros) == 0)  {
 			$nenhumRegistro = true;

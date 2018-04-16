@@ -15,8 +15,6 @@
 	border-radius: 5px;
 	text-align: justify; 
 	background-color: #fff;
-	height: 60vh; 
-	overflow: auto;
 }
 </style>
 
@@ -57,7 +55,7 @@
 
 			echo "
 			<p><strong>Nº DE REGISTRO</strong>: ".$registro['numero_registro']."/".$registro['ano_registro']."</p>
-			<p><strong>DATA</strong>: ".date("d/m/Y", strtotime($registro['data_registro']))."</p>
+			<p><strong>DATA DA INDICAÇÃO</strong>: ".date("d/m/Y", strtotime($registro['data_registro']))."</p>
 			<p><strong>DATA RECEBIDA</strong>: ".date("d/m/Y", strtotime($registro['data_recebida']))."</p>
 			<p><strong>ASSUNTO</strong>: ".utf8_encode($registro['assunto'])."</p>";
 

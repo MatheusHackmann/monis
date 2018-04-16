@@ -15,11 +15,11 @@ if ($_POST) {
 
 <div class="container-fluid bg-fundo">
 	<div class="row">
-		<div class="col-1"></div>
-		<div class="col-10 py-5">
+		<div class="col-sm-12 col-md-1 col-lg-1"></div>
+		<div class="col-sm-12 col-md-10 col-lg-10 py-5">
 			<form class="form-registros" enctype="multipart/form-data" method="post">
 				<div class="row">
-					<div class="col-12">
+					<div class="col-12 col-md-12 col-lg-12">
 						<?php
 						if ($_POST) {	
 							if ($cadastradoSucesso != "") {
@@ -47,50 +47,51 @@ if ($_POST) {
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-4">
 						<label for="id_numero_requerimento">Nº Requerimento: </label>
 						<input class="form-control" type="text" name="numero_requerimento" id="id_numero_requerimento" required autocomplete="off" placeholder="Apenas números" pattern="[0-9]+$">
 					</div>					
-					<div class="form-group col-1">
+					<div class="form-group col-12 col-md-2 col-lg-1">
 						<label for="id_ano_requerimento">&nbsp</label>
 						<input class="form-control" type="text" name="ano_requerimento" id="id_ano_requerimento" required autocomplete="off" placeholder="Ano" pattern="[0-9]+$">
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_requerimento">Data Requerimento: </label>
 						<input class="form-control" type="date" name="data_requerimento" id="id_data_requerimento" required autocomplete="off">
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_recebida">Data Recebida: </label>
 						<input class="form-control" type="date" name="data_recebida" id="id_data_recebida" required autocomplete="off">
 					</div>	
 				</div>	
 
 				<div class="row">
-					<div class="form-group col-12">
+					<div class="form-group col-12 col-md-12 col-lg-12">
 						<label for="">Assunto: </label>
 						<textarea class="form-control" name="assunto_requerimento" id="id_assunto_requerimento" rows="5" required autocomplete="off" style="resize: none;"></textarea>
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="form-group col-6">
+					<div class="form-group col-12 col-md-8 col-lg-6">
 						<label for="">Vereadores: &nbsp&nbsp&nbsp<span style="color: #6A6A66;"><i><u>ADICIONE ";" (PONTO E VÍRGULA) AO FINAL DE CADA NOME</u></i></span></label>
 						<textarea class="form-control" name="vereadores" id="id_vereadores" rows="2" required autocomplete="off" style="resize: none;"></textarea>
 					</div>	
 				</div>
 
 				<div class="row">
-					<div class="form-group col-12">
+					<div class="form-group col-12 col-md-8 col-lg-6">
 						<label for="idSecs">Secretarias: </label>
 					</div>
-
-					<div class="form-group col-12">
+				</div>
+				<div class="row">
+					<div class="form-group col-12 col-md-8 col-lg-6">
 						<select multiple="multiple" name="secs[]" id="idSecs" size="6" required>
 							<?php
 
@@ -111,37 +112,32 @@ if ($_POST) {
 				</div>
 
 				<div class="row">
-					<div class="form-group col-2">
+					<div class="form-group col-12 col-md-4 col-lg-2">
 						<label for="id_data_envio">Data De Envio: </label>
 						<input class="form-control" type="date" name="data_envio" id="id_data_envio" required autocomplete="off">
 					</div>						
 
-					<div class="col-2">
+					<div class="col-12 col-md-4 col-lg-2">
 						<label for="">Nº Protocolo Geral: </label>
 						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
 					</div>
 
-					<div class="offset-2 col-6">
+					<div class="offset-md-2 col-12 col-md-6 col-lg-6">
 						<label>Anexar Imagem</label>
-						<input class="form-control" type="file" name="imagem[]" multiple required> <!-- MULTIPLE -->
+						<input class="form-control" type="file" name="imagem[]" accept="image/*" multiple required> <!-- MULTIPLE -->
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="col-12">
+					<div class="col-6 col-md-1 col-lg-1">
 						<div class="dropdown-divider"></div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-1">
 						<button class="btn btn-success" type="submit">Cadastrar</button>
 					</div>
 				</div>
 
 			</form>
 		</div>
-		<div class="col-1"></div>
+		<div class="col-sm-12 col-md-1 col-lg-1"></div>
 	</div>
 </div>
 
