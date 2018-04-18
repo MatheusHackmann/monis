@@ -15,7 +15,7 @@
 							$cadastroDeOficio->setTabela("oficios");
 							$cadastroDeOficio->setNmrRegistro($_POST['numero_oficio']);
 							$cadastroDeOficio->setAnoRegistro($_POST['ano_oficio']);
-							$registroExiste = $cadastroDeOficio->cadImagem($_FILES['imagem']);
+							$registroExiste = $cadastroDeOficio->uploadPdf($_FILES['pdf']);
 							$cadastradoSucesso = $cadastroDeOficio->novoCadastroOficio($_POST['data_oficio'], $_POST['data_recebida'], $_POST['assunto_oficio'], $_POST['origem'], $_POST['destino'], $_POST['data_envio'], $_POST['data_responder']);		
 
 
@@ -100,8 +100,8 @@
 					</div>	
 
 					<div class="col-12 col-md-4 col-lg-6">
-						<label>Anexar Imagem</label>
-						<input class="form-control" type="file" name="imagem[]" accept="image/*" multiple required> <!-- MULTIPLE -->
+						<label>Anexar PDF</label>
+						<input class="form-control" type="file" name="pdf[]"  accept=".pdf" multiple required> <!-- MULTIPLE -->
 					</div>
 				</div>
 

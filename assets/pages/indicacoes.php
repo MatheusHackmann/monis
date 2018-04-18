@@ -15,7 +15,7 @@
 							$cadastroDeIndicacao->setTabela("indicacoes");
 							$cadastroDeIndicacao->setNmrRegistro($_POST['numero_indicacao']);
 							$cadastroDeIndicacao->setAnoRegistro($_POST['ano_indicacao']);
-							$registroExiste = $cadastroDeIndicacao->cadImagem($_FILES['imagem']);
+							$registroExiste = $cadastroDeIndicacao->uploadPdf($_FILES['pdf']);
 							$cadastradoSucesso = $cadastroDeIndicacao->novoCadastroRI($_POST['data_indicacao'], $_POST['data_recebida'], $_POST['assunto_indicacao'], $_POST['vereadores'], $_POST['secs'], $_POST['numero_protocolo'], $_POST['data_envio']);
 
 
@@ -89,54 +89,54 @@
 				</div>
 
 				<div class="row">
-				<div class="form-group col-12 col-md-8 col-lg-6">
-					<select multiple="multiple" name="secs[]" id="idSecs" size="6" required>
-						<?php
+					<div class="form-group col-12 col-md-8 col-lg-6">
+						<select multiple="multiple" name="secs[]" id="idSecs" size="6" required>
+							<?php
 
-						$secretarias = array('Administração e Recursos Humanos', 'Cultura, Esportes e Lazer', 'Controle Interno E Transparência', 'Comunicação Social', 'Defesa, Proteção e Preservação do Meio Ambiente', 'Educação', 'Financas e Orçamento', 'Gabinete / Vice-Gabinete', 'Governo E Participação Cidadã', 'Habitação', 'Inclusão, Assistência e Desenvolvimento Social', 'Mobilidade Urbana E Rural', 'Obras', 'Planejamento E Gestão Estratégica', 'Procuradoria Geral do Município', 'Saúde', 'Segurança E Defesa Civil', 'Serviços Públicos', 'Trabalho, Emprego E Desenvolvimento Econômico');
+							$secretarias = array('Administração e Recursos Humanos', 'Cultura, Esportes e Lazer', 'Controle Interno E Transparência', 'Comunicação Social', 'Defesa, Proteção e Preservação do Meio Ambiente', 'Educação', 'Financas e Orçamento', 'Gabinete / Vice-Gabinete', 'Governo E Participação Cidadã', 'Habitação', 'Inclusão, Assistência e Desenvolvimento Social', 'Mobilidade Urbana E Rural', 'Obras', 'Planejamento E Gestão Estratégica', 'Procuradoria Geral do Município', 'Saúde', 'Segurança E Defesa Civil', 'Serviços Públicos', 'Trabalho, Emprego E Desenvolvimento Econômico');
 
-						for ($i=0; $i < count($secretarias); $i++) { 
-							echo "
+							for ($i=0; $i < count($secretarias); $i++) { 
+								echo "
 
-							<option value='".$secretarias[$i]."' style='padding: 5px;'>
-							".$secretarias[$i]."
-							</option>
-							";
-						}
+								<option value='".$secretarias[$i]."' style='padding: 5px;'>
+								".$secretarias[$i]."
+								</option>
+								";
+							}
 
-						?>							
-					</select>
-				</div>	
-			</div>
-
-			<div class="row">
-				<div class="form-group col-12 col-md-4 col-lg-2">
-					<label for="id_data_envio">Data De Envio: </label>
-					<input class="form-control" type="date" name="data_envio" id="id_data_envio" required autocomplete="off">
-				</div>						
-
-				<div class="col-12 col-md-4 col-lg-2">
-					<label for="">Nº Protocolo: </label>
-					<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
+							?>							
+						</select>
+					</div>	
 				</div>
 
-				<div class="offset-md-2 col-12 col-md-6 col-lg-6">
-					<label>Anexar Imagem</label>
-					<input class="form-control" type="file" name="imagem[]" accept="image/*" multiple required> <!-- MULTIPLE -->
-				</div>
-			</div>
+				<div class="row">
+					<div class="form-group col-12 col-md-4 col-lg-2">
+						<label for="id_data_envio">Data De Envio: </label>
+						<input class="form-control" type="date" name="data_envio" id="id_data_envio" required autocomplete="off">
+					</div>						
 
-			<div class="row">
-				<div class="col-6 col-md-1 col-lg-1">
-					<div class="dropdown-divider"></div>
-					<button class="btn btn-success" type="submit">Cadastrar</button>
-				</div>
-			</div>
+					<div class="col-12 col-md-4 col-lg-2">
+						<label for="">Nº Protocolo: </label>
+						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
+					</div>
 
-		</form>
+					<div class="offset-md-2 col-12 col-md-6 col-lg-6">
+						<label>Anexar PDF</label>
+						<input class="form-control" type="file" name="pdf[]"  accept=".pdf" multiple required> <!-- MULTIPLE -->
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-6 col-md-1 col-lg-1">
+						<div class="dropdown-divider"></div>
+						<button class="btn btn-success" type="submit">Cadastrar</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+		<div class="col-sm-12 col-md-1 col-lg-1"></div>
 	</div>
-	<div class="col-sm-12 col-md-1 col-lg-1"></div>
-</div>
 </div>
 
 <?php require_once("footer.php"); ?>

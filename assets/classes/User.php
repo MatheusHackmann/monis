@@ -34,4 +34,35 @@ class User{
 			$login = false;
 		}
 	}
+
+	public function cadastrarUsuario($acesso, $usuario, $senha, $confirmarSenha)
+	{
+
+		if ($senha !== $confirmarSenha) {
+			return "1";
+			exit();
+		}
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM usuarios where usuario = :USUARIO;",
+			array(
+				":USUARIO" => $usuario
+			));
+
+		if (count($results) == 0) {
+			$sql->query("INSERT INTO usuarios (acesso, usuario, senha) VALUES (:ACESSO, :USUARIO, :SENHA);",
+				array(
+					":ACESSO" => $acesso,
+					":USUARIO" => $usuario,
+					":SENHA" => $senha
+				));
+
+			return "Usuário cadastrado!";
+		}
+		else {
+			return "Esse nome de usuário já está em uso!";
+			exit();
+		}
+	}
 }

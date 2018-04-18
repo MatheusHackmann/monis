@@ -9,7 +9,7 @@ if ($_POST) {
 	$cadastroDePortaria->setTabela("portarias");
 	$cadastroDePortaria->setNmrRegistro($_POST['numero_portaria']);
 	$cadastroDePortaria->setAnoRegistro($_POST['ano_portaria']);
-	$registroExiste = $cadastroDePortaria->cadImagem($_FILES['imagem']);
+	$registroExiste = $cadastroDePortaria->uploadPdf($_FILES['pdf']);
 	$cadastradoSucesso = $cadastroDePortaria->novoCadastroLPD($_POST['data_portaria'], $_POST['assunto_portaria'], $_POST['numero_protocolo']);
 }
 ?>
@@ -78,8 +78,8 @@ if ($_POST) {
 						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
 					</div>
 					<div class="offset-md-2 col-12 col-md-6 col-lg-6">
-						<label>Anexar Imagem</label>
-						<input class="form-control" type="file" name="imagem[]" accept="image/*" multiple required> <!-- MULTIPLE -->
+						<label>Anexar PDF</label>
+						<input class="form-control" type="file" name="pdf[]"  accept=".pdf" multiple required> <!-- MULTIPLE -->
 					</div>
 				</div>
 				

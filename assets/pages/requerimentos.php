@@ -8,7 +8,7 @@ if ($_POST) {
 	$cadastroDeRequerimento->setTabela("requerimentos");
 	$cadastroDeRequerimento->setNmrRegistro($_POST['numero_requerimento']);
 	$cadastroDeRequerimento->setAnoRegistro($_POST['ano_requerimento']);
-	$registroExiste = $cadastroDeRequerimento->cadImagem($_FILES['imagem']);
+	$registroExiste = $cadastroDeRequerimento->uploadPdf($_FILES['pdf']);
 	$cadastradoSucesso = $cadastroDeRequerimento->novoCadastroRI($_POST['data_requerimento'], $_POST['data_recebida'], $_POST['assunto_requerimento'], $_POST['vereadores'], $_POST['secs'], $_POST['numero_protocolo'], $_POST['data_envio']);	
 }
 ?>
@@ -123,9 +123,9 @@ if ($_POST) {
 					</div>
 
 					<div class="offset-md-2 col-12 col-md-6 col-lg-6">
-						<label>Anexar Imagem</label>
-						<input class="form-control" type="file" name="imagem[]" accept="image/*" multiple required> <!-- MULTIPLE -->
-					</div>
+						<label>Anexar PDF</label>
+						<input class="form-control" type="file" name="pdf[]"  accept=".pdf" multiple required> <!-- MULTIPLE -->
+					</div>					
 				</div>
 
 				<div class="row">

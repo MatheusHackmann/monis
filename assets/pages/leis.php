@@ -9,7 +9,7 @@ if ($_POST) {
 	$cadastroDeLei->setTabela("leis");
 	$cadastroDeLei->setNmrRegistro($_POST['numero_lei']);
 	$cadastroDeLei->setAnoRegistro($_POST['ano_lei']);
-	$registroExiste = $cadastroDeLei->cadImagem($_FILES['imagem']);
+	$registroExiste = $cadastroDeLei->uploadPdf($_FILES['pdf']);
 	$cadastradoSucesso = $cadastroDeLei->novoCadastroLPD($_POST['data_lei'], $_POST['assunto_lei'], $_POST['numero_protocolo']);
 }
 ?>
@@ -79,8 +79,8 @@ if ($_POST) {
 						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
 					</div>
 					<div class="offset-md-2 col-12 col-md-6 col-lg-6">
-						<label>Anexar Imagem</label>
-						<input class="form-control" type="file" name="imagem[]"  accept="image/*" multiple required> <!-- MULTIPLE -->
+						<label>Anexar PDF</label>
+						<input class="form-control" type="file" name="pdf[]"  accept=".pdf" multiple required> <!-- MULTIPLE -->
 					</div>
 				</div>
 				

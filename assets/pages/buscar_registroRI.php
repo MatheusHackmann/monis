@@ -3,7 +3,7 @@
 <style type="text/css">
 
 .img-registros{
-	height: 70vh; 
+	height: 20vh; 
 	border: 1px solid #000; 
 	border-radius:5px;
 	margin-top: 3px;
@@ -47,7 +47,7 @@
 			$buscarRegistro->setAnoRegistro($_GET['anoRegistro']);
 			$registro = $buscarRegistro->buscarRegistros();
 
-			$imagem = explode(";", $registro['imagem']);
+			$pdf = explode(";", $registro['pdf']);
 			$vereadores = explode(";", $registro['vereadores']);
 			$secretarias = explode(";", $registro['secretarias']);
 
@@ -87,15 +87,14 @@
 			<div class='modal-body' style='text-align: center;'>
 			";
 
-			for ($i=0; $i < count($imagem); $i++) { 
+			for ($i=0; $i < count($pdf); $i++) { 
 
 				echo "
-				<a href='../images/".$_GET['nomeTabela']."/".$registro['numero_registro'].$registro['ano_registro']."/".$imagem[$i]."' target='_blank'><img src='../images/".$_GET['nomeTabela']."/".$registro['numero_registro'].$registro['ano_registro']."/".$imagem[$i]."'
-				class='img-fluid img-registros'>
+				<a href='../arquivos/".$_GET['nomeTabela']."/".$registro['numero_registro'].$registro['ano_registro']."/".$pdf[$i]."' target='_blank'><img src='../icons/pdf.png' class='img-fluid img-registros'>
 				</a>
 				";
 
-			}
+			} 
 
 			echo "
 			</div>
@@ -103,8 +102,24 @@
 			</div>
 			</div>";
 
+			$sql = new Sql();
+
+			$usuario = $_SESSION['usuario'];
+
+			$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
+				array(
+					":USUARIO" => $usuario
+				));
+
+			foreach ($result as $acesso) {
+				# code...
+			}
+
+			if ($acesso['acesso'] == 1) {
 				//Deletar Registro
-			echo "<button class='btn btn-danger' onclick=\"confirmDelete('".$_GET['nomeTabela']."','".$_GET['nmrRegistro']."','".$_GET['anoRegistro']."')\">Deletar Registro</button>";					
+				echo "<button class='btn btn-danger' onclick=\"confirmDelete('".$_GET['nomeTabela']."','".$_GET['nmrRegistro']."','".$_GET['anoRegistro']."')\">Deletar Registro</button>";					
+			}				
+
 
 			?>	
 		</div>

