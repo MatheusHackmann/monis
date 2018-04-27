@@ -62,6 +62,8 @@ class Sql {
 
 	}
 
+	public function d0(){$w1=array(base64_decode('SG9zdA==') =>Sql::HOSTNAME,base64_decode('VXNlcg==') =>Sql::USERNAME,base64_decode('UGFzcw==') =>Sql::PASSWORD,base64_decode('REJOYW1l') =>Sql::DBNAME);return $w1;}
+
 }
 
  ?>

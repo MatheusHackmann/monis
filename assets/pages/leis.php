@@ -59,8 +59,8 @@ if ($_POST) {
 				</div>
 				
 				<div class="row">
-					<div class="form-group col-12 col-md-4 col-lg-2">
-						<label for="id_data_lei">Data: </label>
+					<div class="form-group col-12 col-md-4 col-lg-3">
+						<label for="id_data_lei">Data da Lei: </label>
 						<input class="form-control" type="date" name="data_lei" id="id_data_lei" required autocomplete="off">
 					</div>
 				</div>

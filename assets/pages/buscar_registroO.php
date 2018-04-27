@@ -22,7 +22,7 @@
 	<div class="row">
 		
 		<?php echo "
-		<div class='offset-2 col-2'>
+		<div class='offset-md-2 col-12 col-md-2 col-lg-2'>
 		<form action='buscar_".$_GET['nomeTabela'].".php' method='post' class='py-4'>
 		<input class='form-control' type='text' name='buscar".$_GET['buscar']."' placeholder='Buscar Registro' autocomplete='off' pattern='[0-9]+$'>
 
@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="row">
-		<div class="offset-2 col-8 py-2">
+		<div class="offset-md-2 col-12 col-md-8 col-lg-8 py-2">
 
 			<?php 
 			require_once("../classes/Registros.php");
@@ -58,7 +58,7 @@
 
 			echo "
 			<p><strong>Nº DE REGISTRO</strong>: ".$registro['numero_registro']."</p>
-			<p><strong>DATA</strong>: ".date("d/m/Y", strtotime($registro['data_registro']))."</p>
+			<p><strong>DATA DO REGISTRO</strong>: ".date("d/m/Y", strtotime($registro['data_registro']))."</p>
 			<p><strong>DATA RECEBIDA</strong>: ".date("d/m/Y", strtotime($registro['data_recebida']))."</p>
 			<p><strong>ASSUNTO</strong>: ".utf8_encode($registro['assunto'])."</p>
 			<p><strong>Origem</strong>: ".utf8_encode($registro['origem'])."</p>
@@ -67,52 +67,58 @@
 			<p><strong>RESPONDER ATÉ</strong>: ".date("d/m/Y", strtotime($registro['data_responder']))."</p>
 
 			";
+			?>
 
-			echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong'>
-			Ver Documentos
-			</button>
+			<div class="row">
+				<div class="col-12">
+					<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong'>
+						Ver Documentos
+					</button>
 
-			<!-- Modal -->
-			<div class='modal fade' id='exampleModalLong' tabindex='-1' role='dialog' aria-labelledby='exampleModalLongTitle' aria-hidden='true'>
-			<div class='modal-dialog' role='document'>
-			<div class='modal-content'>
-			<div class='modal-body' style='text-align: center;'>
-			";
+					<!-- Modal -->
+					<div class='modal fade' id='exampleModalLong' tabindex='-1' role='dialog' aria-labelledby='exampleModalLongTitle' aria-hidden='true'>
+						<div class='modal-dialog' role='document'>
+							<div class='modal-content'>
+								<div class='modal-body' style='text-align: center;'>
 
-			for ($i=0; $i < count($pdf); $i++) { 
+									<?php
+									for ($i=0; $i < count($pdf); $i++) { 
 
-				echo "
-				<a href='../arquivos/".$_GET['nomeTabela']."/".$registro['numero_registro'].$registro['ano_registro']."/".$pdf[$i]."' target='_blank'><img src='../icons/pdf.png' class='img-fluid img-registros'>
-				</a>
-				";
+										echo "
+										<a href='../arquivos/".$_GET['nomeTabela']."/".$registro['numero_registro'].$registro['ano_registro']."/".$pdf[$i]."' target='_blank'><img src='../icons/pdf.png' class='img-fluid img-registros'>
+										</a>
+										";
+									}
+									?>
 
-			}
+								</div>
+							</div>
+						</div>
+					</div>			
 
-			echo "
+					<?php
+
+					$sql = new Sql();
+
+					$usuario = $_SESSION['usuario'];
+
+					$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
+						array(
+							":USUARIO" => $usuario
+						));
+
+					foreach ($result as $acesso) {
+					}
+
+					if ($acesso['acesso'] == 1) {
+						//Deletar Registro
+						echo "<button class='btn btn-danger' onclick=\"confirmDelete('".$_GET['nomeTabela']."','".$_GET['nmrRegistro']."','".$_GET['anoRegistro']."')\">Deletar Registro</button>";					
+					}	
+
+					?>					
+				</div>
 			</div>
-			</div>
-			</div>
-			</div>";
 
-			$sql = new Sql();
-
-			$usuario = $_SESSION['usuario'];
-
-			$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
-				array(
-					":USUARIO" => $usuario
-				));
-
-			foreach ($result as $acesso) {
-				# code...
-			}
-
-			if ($acesso['acesso'] == 1) {
-				//Deletar Registro
-				echo "<button class='btn btn-danger' onclick=\"confirmDelete('".$_GET['nomeTabela']."','".$_GET['nmrRegistro']."','".$_GET['anoRegistro']."')\">Deletar Registro</button>";					
-			}	
-											
-			?>			
 		</div>
 	</div>
 </div>

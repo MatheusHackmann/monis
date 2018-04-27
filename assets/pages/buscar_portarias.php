@@ -22,7 +22,7 @@
 
 <div class="container-fluid bg-fundo">
 	<div class="row">
-		<div class="offset-2 col-2">
+		<div class="offset-md-2 col-12 col-md-2 col-lg-2">
 			<form action="buscar_portarias.php" method="post" class="py-4">
 				<input class="form-control" type="text" name="buscarPortaria" placeholder="Buscar Portarias" autocomplete="off" pattern="[0-9]+$">	
 				<div class="dropdown-divider"></div>
@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="row">
-		<div class="offset-2 col-8 py-2">
+		<div class="offset-md-2 col-12 col-md-8 col-lg-8 py-2">
 
 			<?php 
 			require_once("../classes/Registros.php");

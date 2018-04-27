@@ -22,7 +22,7 @@
 
 <div class="container-fluid bg-fundo">
 	<div class="row">
-		<div class="offset-2 col-2">
+		<div class="offset-md-2 col-12 col-md-2 col-lg-2">
 			<form action="buscar_oficios.php" method="post" class="py-4">
 				<input class="form-control" type="text" name="buscarOficio" placeholder="Buscar Oficios" autocomplete="off" pattern="[0-9]+$">
 
@@ -33,7 +33,7 @@
 	</div>
 
 	<div class="row">
-		<div class="offset-2 col-8 py-2">
+		<div class="offset-md-2 col-12 col-md-8 col-lg-8 py-2">
 
 			<?php 
 			require_once("../classes/Registros.php");
@@ -73,18 +73,31 @@
 						$assunto = substr($registro[$i]['assunto'], 0, 150 + 1) . $suffix;
 						$data = date("d/m/Y", strtotime($registro[$i]['data_registro']));
 
+						$dataResposta = explode("-", $registro[$i]['data_responder']);
+						$dataAtual = explode("-", date("Y-m-d"));
+
 						$nmrRegistro = $registro[$i]['numero_registro'];
 						$anoRegistro = $registro[$i]['ano_registro'];						
 
+						echo "<tr>";
+
+						//Verifica se a data de resposta está á até 3 dias de vencer, caso sim exibe o registro em vermelho
+						if (($dataResposta[2] == $dataAtual[2]+3) && ($dataResposta[1] == $dataAtual[1])|| ($dataResposta[2] == $dataAtual[2]+2) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]+1) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]) && ($dataResposta[1] == $dataAtual[1])) {
+							echo"
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro' style='color: red;'>".$nmrRegistro."/".$anoRegistro."</a></td>";
+						}
+						else {
+							echo"
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>";							
+						}
+
 						echo "
-						<tr>
-						<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['origem']."</td>
 						</tr>
 						";
-						
+
 					}	
 					echo "
 					</table>
@@ -126,18 +139,32 @@
 						$assunto = substr($registro[$i]['assunto'], 0, 150 + 1) . $suffix;
 						$data = date("d/m/Y", strtotime($registro[$i]['data_registro']));
 
+						$dataResposta = explode("-", $registro[$i]['data_responder']);
+						$dataAtual = explode("-", date("Y-m-d"));
+
 						$nmrRegistro = $registro[$i]['numero_registro'];
 						$anoRegistro = $registro[$i]['ano_registro'];						
 
+						echo "<tr>";
+
+						//Verifica se a data de resposta está á até 3 dias de vencer, caso sim exibe o registro em vermelho
+						if (($dataResposta[2] == $dataAtual[2]+3) && ($dataResposta[1] == $dataAtual[1])|| ($dataResposta[2] == $dataAtual[2]+2) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]+1) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]) && ($dataResposta[1] == $dataAtual[1])) {
+							echo"
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro' style='color: red;'>".$nmrRegistro."/".$anoRegistro."</a></td>";
+						}
+						else {
+							echo"
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>";							
+						}
+
 						echo "
-						<tr>
-						<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['origem']."</td>
 						</tr>
 						";
-						
+
+
 					}	
 					echo "
 					</table>

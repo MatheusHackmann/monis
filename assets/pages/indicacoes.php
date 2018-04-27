@@ -1,5 +1,18 @@
 <?php require_once("header.php"); ?>
 
+<?php
+if ($_POST) {
+	require_once("../classes/Registros.php");
+	$cadastroDeIndicacao = new Registros();
+
+	$cadastroDeIndicacao->setTabela("indicacoes");
+	$cadastroDeIndicacao->setNmrRegistro($_POST['numero_indicacao']);
+	$cadastroDeIndicacao->setAnoRegistro($_POST['ano_indicacao']);
+	$registroExiste = $cadastroDeIndicacao->uploadPdf($_FILES['pdf']);
+	$cadastradoSucesso = $cadastroDeIndicacao->novoCadastroRI($_POST['data_indicacao'], $_POST['data_recebida'], $_POST['assunto_indicacao'], $_POST['vereadores'], $_POST['secs'], $_POST['numero_protocolo'], $_POST['data_envio']);
+}
+?>
+
 <div class="container-fluid bg-fundo">
 	<div class="row">
 		<div class="col-sm-12 col-md-1 col-lg-1"></div>
@@ -9,17 +22,7 @@
 					<div class="col-12 col-md-12 col-lg-12">
 						<?php
 						if ($_POST) {
-							require_once("../classes/Registros.php");
-							$cadastroDeIndicacao = new Registros();
-
-							$cadastroDeIndicacao->setTabela("indicacoes");
-							$cadastroDeIndicacao->setNmrRegistro($_POST['numero_indicacao']);
-							$cadastroDeIndicacao->setAnoRegistro($_POST['ano_indicacao']);
-							$registroExiste = $cadastroDeIndicacao->uploadPdf($_FILES['pdf']);
-							$cadastradoSucesso = $cadastroDeIndicacao->novoCadastroRI($_POST['data_indicacao'], $_POST['data_recebida'], $_POST['assunto_indicacao'], $_POST['vereadores'], $_POST['secs'], $_POST['numero_protocolo'], $_POST['data_envio']);
-
-
-							if ($cadastradoSucesso != "") {
+							if ($cadastradoSucesso != "1" && $cadastradoSucesso != "2" && $cadastradoSucesso != "3" ) {
 								echo "
 								<div class='alert alert-success alert-dismissible fade show' role='alert'>
 								<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -43,88 +46,213 @@
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="form-group col-12 col-md-4 col-lg-4">
-						<label for="id_numero_indicacao">Nº Indicação: </label>
-						<input class="form-control" type="text" name="numero_indicacao" id="id_numero_indicacao" required autocomplete="off" placeholder="Apenas números" pattern="[0-9]+$">
+				<?php 
+				if (($_POST && $cadastradoSucesso == "1") || ($_POST && $cadastradoSucesso == "2") || ($_POST && $cadastradoSucesso == "3")) {
+					echo "
+					<div class='row'>
+					<div class='form-group col-12 col-md-4 col-lg-4'>
+					<label for='id_numero_indicacao'>Nº indicacao: </label>
+					<input class='form-control' type='text' name='numero_indicacao' id='id_numero_indicacao' required autocomplete='off' placeholder='Apenas números' pattern='[0-9]+$' value='".$_POST['numero_indicacao']."'>
 					</div>					
-					<div class="form-group col-12 col-md-2 col-lg-1">
-						<label for="id_ano_indicacao">&nbsp</label>
-						<input class="form-control" type="text" name="ano_indicacao" id="id_ano_indicacao" required autocomplete="off" placeholder="Ano" pattern="[0-9]+$">
+					<div class='form-group col-12 col-md-2 col-lg-1'>
+					<label for='id_ano_indicacao'>&nbsp</label>
+					<input class='form-control' type='text' name='ano_indicacao' id='id_ano_indicacao' required autocomplete='off' placeholder='Ano' pattern='[0-9]+$' value='".$_POST['ano_indicacao']."'>
 					</div>
-				</div>				
-
-				<div class="row">
-					<div class="form-group col-12 col-md-4 col-lg-2">
-						<label for="id_data_indicacao">Data Indicação: </label>
-						<input class="form-control" type="date" name="data_indicacao" id="id_data_indicacao" required autocomplete="off">
 					</div>
-				</div>
 
-				<div class="row">
-					<div class="form-group col-12 col-md-4 col-lg-2">
-						<label for="id_data_recebida">Data Recebida: </label>
-						<input class="form-control" type="date" name="data_recebida" id="id_data_recebida" required autocomplete="off">
+					<div class='row'>
+					<div class='form-group col-12 col-md-4 col-lg-3'>
+					<label for='id_data_indicacao'>Data indicacao:</label>
+					<input class='form-control' type='date' name='data_indicacao' id='id_data_indicacao' required autocomplete='off' style='border: 1px solid red;'>
+					</div>
+					</div>
+					";
+
+					if ($cadastradoSucesso == "1") {
+						echo "
+						<div class='row'>
+						<div class='form-group col-12 col-md-4 col-lg-3'>
+						<label for='id_data_recebida'>Data Recebida: <br><strong>Data recebida não pode ser menor que a data da indicação!</strong></label>
+						<input class='form-control' type='date' name='data_recebida' id='id_data_recebida' required autocomplete='off' style='border: 1px solid red;'>
+						</div>	
+						</div>
+						";
+					}else{
+						echo "
+						<div class='row'>
+						<div class='form-group col-12 col-md-4 col-lg-3'>
+						<label for='id_data_recebida'>Data Recebida: </label>
+						<input class='form-control' type='date' name='data_recebida' id='id_data_recebida' required autocomplete='off' style='border: 1px solid red;'>
+						</div>	
+						</div>
+						";
+					}
+
+					echo"
+					<div class='row'>
+					<div class='form-group col-12 col-md-12 col-lg-12'>
+					<label for=''>Assunto: </label>
+					<textarea class='form-control' name='assunto_indicacao' id='id_assunto_indicacao' rows='5' required autocomplete='off' style='resize: none;'>".$_POST['assunto_indicacao']."</textarea>
+					</div>
+					</div>
+
+					<div class='row'>
+					<div class='form-group col-12 col-md-8 col-lg-6'>
+					<label for=''>Vereadores: &nbsp&nbsp&nbsp<span style='color: #6A6A66;'><i><u>ADICIONE ';' (PONTO E VÍRGULA) AO FINAL DE CADA NOME</u></i></span></label>
+					<textarea class='form-control' name='vereadores' id='id_vereadores' rows='2' required autocomplete='off' style='resize: none;'>".$_POST['vereadores']."</textarea>
 					</div>	
-				</div>	
-
-				<div class="row">
-					<div class="form-group col-12 col-md-12 col-lg-12">
-						<label for="">Assunto: </label>
-						<textarea class="form-control" name="assunto_indicacao" id="id_assunto_indicacao" rows="5" required autocomplete="off" style="resize: none;"></textarea>
 					</div>
-				</div>
 
-				<div class="row">
-					<div class="form-group col-12 col-md-8 col-lg-6">
-						<label for="">Vereadores: &nbsp&nbsp&nbsp<span style="color: #6A6A66;"><i><u>ADICIONE ";" (PONTO E VÍRGULA) AO FINAL DE CADA NOME</u></i></span></label>
-						<textarea class="form-control" name="vereadores" id="id_vereadores" rows="2" required autocomplete="off" style="resize: none;"></textarea>
-					</div>	
-				</div>
-
-				<div class="row">
-					<div class="form-group col-12 col-md-8 col-lg-6">
-						<label for="idSecs">Secretarias: </label>
+					<div class='row'>
+					<div class='form-group col-12 col-md-8 col-lg-6'>
+					<label for='idSecs'>Secretarias: </label>
 					</div>
-				</div>
+					</div>
+					<div class='row'>
+					<div class='col-12 col-md-8 col-lg-6 form-control' style='height: 150px; overflow: auto; border: 1px solid red;'>
+					";
 
-				<div class="row">
-					<div class="form-group col-12 col-md-8 col-lg-6">
-						<select multiple="multiple" name="secs[]" id="idSecs" size="6" required>
-							<?php
 
-							$secretarias = array('Administração e Recursos Humanos', 'Cultura, Esportes e Lazer', 'Controle Interno E Transparência', 'Comunicação Social', 'Defesa, Proteção e Preservação do Meio Ambiente', 'Educação', 'Financas e Orçamento', 'Gabinete / Vice-Gabinete', 'Governo E Participação Cidadã', 'Habitação', 'Inclusão, Assistência e Desenvolvimento Social', 'Mobilidade Urbana E Rural', 'Obras', 'Planejamento E Gestão Estratégica', 'Procuradoria Geral do Município', 'Saúde', 'Segurança E Defesa Civil', 'Serviços Públicos', 'Trabalho, Emprego E Desenvolvimento Econômico');
+					$secretarias = array('Administração e Recursos Humanos', 'Cultura, Esportes e Lazer', 'Controle Interno E Transparência', 'Comunicação Social', 'Defesa, Proteção e Preservação do Meio Ambiente', 'Educação', 'Financas e Orçamento', 'Gabinete / Vice-Gabinete', 'Governo E Participação Cidadã', 'Habitação', 'Inclusão, Assistência e Desenvolvimento Social', 'Mobilidade Urbana E Rural', 'Obras', 'Planejamento E Gestão Estratégica', 'Procuradoria Geral do Município', 'Saúde', 'Segurança E Defesa Civil', 'Serviços Públicos', 'Trabalho, Emprego E Desenvolvimento Econômico');
 
-							for ($i=0; $i < count($secretarias); $i++) { 
-								echo "
+					for ($i=0; $i < count($secretarias); $i++) { 
+						echo "
+						<input type='checkbox' name='secs[]' value='".$secretarias[$i]."' style='padding: 5px;' />
+						".$secretarias[$i]."<br>
+						";
+					}
 
-								<option value='".$secretarias[$i]."' style='padding: 5px;'>
-								".$secretarias[$i]."
-								</option>
-								";
-							}
-
-							?>							
-						</select>
+					echo "
 					</div>	
-				</div>
+					</div>
+					";
 
-				<div class="row">
-					<div class="form-group col-12 col-md-4 col-lg-2">
-						<label for="id_data_envio">Data De Envio: </label>
-						<input class="form-control" type="date" name="data_envio" id="id_data_envio" required autocomplete="off">
+					if ($cadastradoSucesso == "2") {
+						echo "
+						<div class='row'>
+						<div class='form-group col-12 col-md-4 col-lg-3'>
+						<label for='id_data_envio'>Data De Envio: <br><strong>Data de envio não pode ser menor que a data da indicação!</strong></label>
+						<input class='form-control' type='date' name='data_envio' id='id_data_envio' required autocomplete='off' style='border: 1px solid red;'>
+						</div>
+						";	
+					}
+					else if ($cadastradoSucesso == "3"){
+						echo "
+						<div class='row'>
+						<div class='form-group col-12 col-md-4 col-lg-3'>
+						<label for='id_data_envio'>Data De Envio: <br><strong>Data de envio não pode ser menor que a data recebida!</strong></label>
+						<input class='form-control' type='date' name='data_envio' id='id_data_envio' required autocomplete='off' style='border: 1px solid red;'>
+						</div>
+						";	
+					}
+					else {
+						echo "
+						<div class='row'>
+						<div class='form-group col-12 col-md-4 col-lg-3'>
+						<label for='id_data_envio'>Data De Envio: </label>
+						<input class='form-control' type='date' name='data_envio' id='id_data_envio' required autocomplete='off' style='border: 1px solid red;'>
+						</div>
+						";						
+					}				
+
+					echo "
+					<div class='form-group col-12 col-md-4 col-lg-2'>
+					<label for=''>Nº Protocolo Geral: </label>
+					<input class='form-control' type='text' name='numero_protocolo' id='id_numero_protocolo' required autocomplete='off' pattern='[0-9]+$' value='".$_POST['numero_protocolo']."'>
+					</div>
+
+					<div class='form-group col-12 col-md-4 col-lg-7' >
+					<label>Anexar PDF</label>
+					<input class='form-control' type='file' name='pdf[]'  accept='.pdf' multiple required style='border: 1px solid red;'>
+					</div>					
+					</div>					
+					";
+				}
+				
+				else {
+					echo "
+					<div class='row'>
+					<div class='form-group col-12 col-md-4 col-lg-4'>
+					<label for='id_numero_indicacao'>Nº indicacao: </label>
+					<input class='form-control' type='text' name='numero_indicacao' id='id_numero_indicacao' required autocomplete='off' placeholder='Apenas números' pattern='[0-9]+$'>
+					</div>					
+					<div class='form-group col-12 col-md-2 col-lg-1'>
+					<label for='id_ano_indicacao'>&nbsp</label>
+					<input class='form-control' type='text' name='ano_indicacao' id='id_ano_indicacao' required autocomplete='off' placeholder='Ano' pattern='[0-9]+$'>
+					</div>
+					</div>
+
+					<div class='row'>
+					<div class='form-group col-12 col-md-4 col-lg-3'>
+					<label for='id_data_indicacao'>Data indicacao: </label>
+					<input class='form-control' type='date' name='data_indicacao' id='id_data_indicacao' required autocomplete='off'>
+					</div>
+					</div>
+
+					<div class='row'>
+					<div class='form-group col-12 col-md-4 col-lg-3'>
+					<label for='id_data_recebida'>Data Recebida: </label>
+					<input class='form-control' type='date' name='data_recebida' id='id_data_recebida' required autocomplete='off'>
+					</div>	
+					</div>	
+
+					<div class='row'>
+					<div class='form-group col-12 col-md-12 col-lg-12'>
+					<label for=''>Assunto: </label>
+					<textarea class='form-control' name='assunto_indicacao' id='id_assunto_indicacao' rows='5' required autocomplete='off' style='resize: none;'></textarea>
+					</div>
+					</div>
+
+					<div class='row'>
+					<div class='form-group col-12 col-md-8 col-lg-6'>
+					<label for=''>Vereadores: &nbsp&nbsp&nbsp<span style='color: #6A6A66;'><i><u>ADICIONE ';' (PONTO E VÍRGULA) AO FINAL DE CADA NOME</u></i></span></label>
+					<textarea class='form-control' name='vereadores' id='id_vereadores' rows='2' required autocomplete='off' style='resize: none;'></textarea>
+					</div>	
+					</div>
+
+					<div class='row'>
+					<div class='form-group col-12 col-md-8 col-lg-6'>
+					<label for='idSecs'>Secretarias: </label>
+					</div>
+					</div>
+					<div class='row'>
+					<div class='col-12 col-md-8 col-lg-6 form-control' style='height: 150px; overflow: auto; border:'>
+					";
+
+					$secretarias = array('Administração e Recursos Humanos', 'Cultura, Esportes e Lazer', 'Controle Interno E Transparência', 'Comunicação Social', 'Defesa, Proteção e Preservação do Meio Ambiente', 'Educação', 'Financas e Orçamento', 'Gabinete / Vice-Gabinete', 'Governo E Participação Cidadã', 'Habitação', 'Inclusão, Assistência e Desenvolvimento Social', 'Mobilidade Urbana E Rural', 'Obras', 'Planejamento E Gestão Estratégica', 'Procuradoria Geral do Município', 'Saúde', 'Segurança E Defesa Civil', 'Serviços Públicos', 'Trabalho, Emprego E Desenvolvimento Econômico');
+
+					for ($i=0; $i < count($secretarias); $i++) { 
+						echo "
+						<input type='checkbox' name='secs[]' value='".$secretarias[$i]."' style='padding: 5px;' />
+						".$secretarias[$i]."<br>
+						";
+					}
+
+					echo "							
+					</div>	
+					</div>
+
+					<div class='row'>
+					<div class='form-group col-12 col-md-4 col-lg-3'>
+					<label for='id_data_envio'>Data De Envio: </label>
+					<input class='form-control' type='date' name='data_envio' id='id_data_envio' required autocomplete='off'>
 					</div>						
 
-					<div class="col-12 col-md-4 col-lg-2">
-						<label for="">Nº Protocolo: </label>
-						<input class="form-control" type="text" name="numero_protocolo" id="id_numero_protocolo" required autocomplete="off" pattern="[0-9]+$">
+					<div class='form-group col-12 col-md-4 col-lg-2'>
+					<label for=''>Nº Protocolo Geral: </label>
+					<input class='form-control' type='text' name='numero_protocolo' id='id_numero_protocolo' required autocomplete='off' pattern='[0-9]+$'>
 					</div>
 
-					<div class="offset-md-2 col-12 col-md-6 col-lg-6">
-						<label>Anexar PDF</label>
-						<input class="form-control" type="file" name="pdf[]"  accept=".pdf" multiple required> <!-- MULTIPLE -->
-					</div>
-				</div>
+					<div class='form-group col-12 col-md-4 col-lg-7'>
+					<label>Anexar PDF</label>
+					<input class='form-control' type='file' name='pdf[]'  accept='.pdf' multiple required>
+					</div>					
+					</div>	
+					";
+				}
+				?>				
+
+				
 
 				<div class="row">
 					<div class="col-6 col-md-1 col-lg-1">
