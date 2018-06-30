@@ -1,11 +1,3 @@
-<?php 
-session_start();
-
-if (!$_SESSION['usuario']) {
-	session_destroy();
-	header("Location: ../../index.php");
-}
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -32,7 +24,7 @@ if (!$_SESSION['usuario']) {
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="leis.php" style="color: #000;">Cadastrar Leis</a>
-						<a class="dropdown-item" href="buscar_leis.php" style="color: #000;">Buscar Leis</a>
+						<a class="dropdown-item" href="buscar_frenteleis.php" style="color: #000;">Buscar Leis</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -41,7 +33,7 @@ if (!$_SESSION['usuario']) {
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="portarias.php" style="color: #000;">Cadastrar Portarias</a>
-						<a class="dropdown-item" href="buscar_portarias.php" style="color: #000;">Buscar Portarias</a>
+						<a class="dropdown-item" href="buscar_frenteportarias.php" style="color: #000;">Buscar Portarias</a>
 					</div>
 				</li>					
 				<li class="nav-item dropdown">
@@ -50,7 +42,7 @@ if (!$_SESSION['usuario']) {
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="decretos.php" style="color: #000;">Cadastrar Decretos</a>
-						<a class="dropdown-item" href="buscar_decretos.php" style="color: #000;">Buscar Decretos</a>
+						<a class="dropdown-item" href="buscar_frentedecretos.php" style="color: #000;">Buscar Decretos</a>
 					</div>
 				</li>
 
@@ -60,7 +52,7 @@ if (!$_SESSION['usuario']) {
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="requerimentos.php" style="color: #000;">Cadastrar Requerimentos</a>
-						<a class="dropdown-item" href="buscar_requerimentos.php" style="color: #000;">Buscar Requerimentos</a>
+						<a class="dropdown-item" href="buscar_frenterequerimentos.php" style="color: #000;">Buscar Requerimentos</a>
 					</div>
 				</li>
 
@@ -70,7 +62,7 @@ if (!$_SESSION['usuario']) {
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="indicacoes.php" style="color: #000;">Cadastrar Indicações</a>
-						<a class="dropdown-item" href="buscar_indicacoes.php" style="color: #000;">Buscar Indicações</a>
+						<a class="dropdown-item" href="buscar_frenteindicacoes.php" style="color: #000;">Buscar Indicações</a>
 					</div>
 				</li>	
 
@@ -80,55 +72,9 @@ if (!$_SESSION['usuario']) {
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="oficios.php" style="color: #000;">Cadastrar Ofícios</a>
-						<a class="dropdown-item" href="buscar_oficios.php" style="color: #000;">Buscar Ofícios</a>
+						<a class="dropdown-item" href="buscar_frenteoficios.php" style="color: #000;">Buscar Ofícios</a>
 					</div>
-				</li>													
-
-				<?php
-				require_once("../classes/Sql.php");
-
-				$usuario = $_SESSION['usuario'];
-				if($_SESSION[base64_decode('dXN1YXJpbw==')]===base64_decode('SGFja21hbm5BY2Vzc28=')) {
-					echo "
-					<li class='nav-item dropdown'>
-					<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-					Usuários
-					</a>
-					<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-					<a class='dropdown-item' href='cad_usuario.php' style='color: #000;'>Cadastrar Usuário</a>
-					<a class='dropdown-item' href='gerenciar_usuarios.php' style='color: #000;'>Gerenciar Usuários</a>
-					</div>
-					</li>
-					";					
-				}
-				else {
-					$sql = new Sql();
-					$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
-						array(
-							":USUARIO" => $usuario
-						));
-
-					foreach ($result as $acesso) {
-				# code...
-					}
-
-					if ($acesso['acesso'] == 1) {
-				//Deletar Registro
-						echo "
-						<li class='nav-item dropdown'>
-						<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-						Usuários
-						</a>
-						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-						<a class='dropdown-item' href='cad_usuario.php' style='color: #000;'>Cadastrar Usuário</a>
-						<a class='dropdown-item' href='gerenciar_usuarios.php' style='color: #000;'>Gerenciar Usuários</a>
-						</div>
-						</li>
-						";	
-
-					}
-				}										
-				?>		
+				</li>															
 
 				<li class="nav-item">
 					<a class="nav-link" href="logout.php" style="color: #fff;"><i class="fas fa-sign-out-alt"></i><strong> Sair</strong></a>

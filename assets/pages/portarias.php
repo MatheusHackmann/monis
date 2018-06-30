@@ -1,4 +1,9 @@
-<?php require_once("header.php"); ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
+
 <?php 
 
 require_once("../classes/Registros.php");
@@ -6,7 +11,7 @@ require_once("../classes/Registros.php");
 if ($_POST) {
 	$cadastroDePortaria = new Registros();
 
-	$cadastroDePortaria->setTabela("portarias");
+	$cadastroDePortaria->setTabela("frenteportarias");
 	$cadastroDePortaria->setNmrRegistro($_POST['numero_portaria']);
 	$cadastroDePortaria->setAnoRegistro($_POST['ano_portaria']);
 	$registroExiste = $cadastroDePortaria->uploadPdf($_FILES['pdf']);

@@ -1,4 +1,8 @@
-<?php require_once("header.php") ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
 
 <style type="text/css">
 
@@ -97,25 +101,11 @@
 					</div>			
 
 					<?php
-
-					$sql = new Sql();
-
-					$usuario = $_SESSION['usuario'];
-
-					$result = $sql->select("SELECT * FROM usuarios WHERE usuario = :USUARIO;",
-						array(
-							":USUARIO" => $usuario
-						));
-
-					foreach ($result as $acesso) {
-					}
-
-					if ($acesso['acesso'] == 1) {
+					if ($_SESSION['pmsUsPerm'] == "FRENTE_ADM") {
 						//Deletar Registro
 						echo "<button class='btn btn-danger' onclick=\"confirmDelete('".$_GET['nomeTabela']."','".$_GET['nmrRegistro']."','".$_GET['anoRegistro']."')\">Deletar Registro</button>";					
 					}	
-
-					?>					
+					?>						
 				</div>
 			</div>
 

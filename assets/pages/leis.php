@@ -1,4 +1,9 @@
-<?php require_once("header.php"); ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
+
 <?php 
 
 require_once("../classes/Registros.php");
@@ -6,7 +11,7 @@ require_once("../classes/Registros.php");
 if ($_POST) {
 	$cadastroDeLei = new Registros();
 
-	$cadastroDeLei->setTabela("leis");
+	$cadastroDeLei->setTabela("frenteleis");
 	$cadastroDeLei->setNmrRegistro($_POST['numero_lei']);
 	$cadastroDeLei->setAnoRegistro($_POST['ano_lei']);
 	$registroExiste = $cadastroDeLei->uploadPdf($_FILES['pdf']);

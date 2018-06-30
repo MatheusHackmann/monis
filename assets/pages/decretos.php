@@ -1,4 +1,9 @@
-<?php require_once("header.php"); ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
+
 <?php 
 
 require_once("../classes/Registros.php");
@@ -6,7 +11,7 @@ require_once("../classes/Registros.php");
 if ($_POST) {
 	$cadastroDeDecreto = new Registros();
 
-	$cadastroDeDecreto->setTabela("decretos");
+	$cadastroDeDecreto->setTabela("frentedecretos");
 	$cadastroDeDecreto->setNmrRegistro($_POST['numero_decreto']);
 	$cadastroDeDecreto->setAnoRegistro($_POST['ano_decreto']);
 	$registroExiste = $cadastroDeDecreto->uploadPdf($_FILES['pdf']);

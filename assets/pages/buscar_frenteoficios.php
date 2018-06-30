@@ -1,4 +1,8 @@
-<?php require_once("header.php") ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
 
 <style type="text/css">
 
@@ -23,7 +27,7 @@
 <div class="container-fluid bg-fundo">
 	<div class="row">
 		<div class="offset-md-2 col-12 col-md-2 col-lg-2">
-			<form action="buscar_oficios.php" method="post" class="py-4">
+			<form action="buscar_frenteoficios.php" method="post" class="py-4">
 				<input class="form-control" type="text" name="buscarOficio" placeholder="Buscar Oficios" autocomplete="off" pattern="[0-9]+$">
 
 				<div class="dropdown-divider"></div>
@@ -40,7 +44,7 @@
 
 			if ($_POST && $_POST['buscarOficio'] === "") {
 				$todosOsOficios = new Registros();
-				$todosOsOficios->setTabela("oficios");
+				$todosOsOficios->setTabela("frenteoficios");
 				$registro = $todosOsOficios->buscarTodosRegistros();	
 
 				if ($registro === true) {
@@ -84,11 +88,11 @@
 						//Verifica se a data de resposta está á até 3 dias de vencer, caso sim exibe o registro em vermelho
 						if (($dataResposta[2] == $dataAtual[2]+3) && ($dataResposta[1] == $dataAtual[1])|| ($dataResposta[2] == $dataAtual[2]+2) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]+1) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]) && ($dataResposta[1] == $dataAtual[1])) {
 							echo"
-							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro' style='color: red;'>".$nmrRegistro."/".$anoRegistro."</a></td>";
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=frenteoficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro' style='color: red;'>".$nmrRegistro."/".$anoRegistro."</a></td>";
 						}
 						else {
 							echo"
-							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>";							
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=frenteoficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>";							
 						}
 
 						echo "
@@ -106,7 +110,7 @@
 			}
 			else if ($_POST && $_POST['buscarOficio'] != "") {
 				$buscarOficio = new Registros();
-				$buscarOficio->setTabela("oficios");
+				$buscarOficio->setTabela("frenteoficios");
 				$buscarOficio->setNmrRegistro($_POST['buscarOficio']);
 				$registro = $buscarOficio->buscarRegistro(); 
 
@@ -150,11 +154,11 @@
 						//Verifica se a data de resposta está á até 3 dias de vencer, caso sim exibe o registro em vermelho
 						if (($dataResposta[2] == $dataAtual[2]+3) && ($dataResposta[1] == $dataAtual[1])|| ($dataResposta[2] == $dataAtual[2]+2) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]+1) && ($dataResposta[1] == $dataAtual[1]) || ($dataResposta[2] == $dataAtual[2]) && ($dataResposta[1] == $dataAtual[1])) {
 							echo"
-							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro' style='color: red;'>".$nmrRegistro."/".$anoRegistro."</a></td>";
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=frenteoficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro' style='color: red;'>".$nmrRegistro."/".$anoRegistro."</a></td>";
 						}
 						else {
 							echo"
-							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=oficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>";							
+							<td>"."<a href='buscar_registroO.php?buscar=Oficio&nomeTabela=frenteoficios&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>";							
 						}
 
 						echo "

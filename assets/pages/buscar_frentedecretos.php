@@ -1,4 +1,8 @@
-<?php require_once("header.php") ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
 
 <style type="text/css">
 
@@ -23,8 +27,8 @@
 <div class="container-fluid bg-fundo">
 	<div class="row">
 		<div class="offset-md-2 col-12 col-md-2 col-lg-2">
-			<form action="buscar_portarias.php" method="post" class="py-4">
-				<input class="form-control" type="text" name="buscarPortaria" placeholder="Buscar Portarias" autocomplete="off" pattern="[0-9]+$">	
+			<form action="buscar_frentedecretos.php" method="post" class="py-4">
+				<input class="form-control" type="text" name="buscarDecreto" placeholder="Buscar Decretos" autocomplete="off" pattern="[0-9]+$">	
 				<div class="dropdown-divider"></div>
 				<button class="btn btn-primary">Buscar</button>
 			</form>
@@ -37,10 +41,10 @@
 			<?php 
 			require_once("../classes/Registros.php");
 
-			if ($_POST && $_POST['buscarPortaria'] === "") {
-				$todasAsportarias = new Registros();
-				$todasAsportarias->setTabela("portarias");
-				$registro = $todasAsportarias->buscarTodosRegistros();	
+			if ($_POST && $_POST['buscarDecreto'] === "") {
+				$todosOsDecretos = new Registros();
+				$todosOsDecretos->setTabela("frentedecretos");
+				$registro = $todosOsDecretos->buscarTodosRegistros();	
 
 				if ($registro === true) {
 					echo "
@@ -78,7 +82,7 @@
 
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registroLPD.php?buscar=Portaria&nomeTabela=portarias&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Decreto&nomeTabela=frentedecretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
@@ -91,11 +95,11 @@
 					</div>";
 				}					
 			}
-			else if ($_POST && $_POST['buscarPortaria'] != "") {
-				$buscarPortaria = new Registros();
-				$buscarPortaria->setTabela("portarias");
-				$buscarPortaria->setNmrRegistro($_POST['buscarPortaria']);
-				$registro = $buscarPortaria->buscarRegistro(); 
+			else if ($_POST && $_POST['buscarDecreto'] != "") {
+				$buscarDecreto = new Registros();
+				$buscarDecreto->setTabela("frentedecretos");
+				$buscarDecreto->setNmrRegistro($_POST['buscarDecreto']);
+				$registro = $buscarDecreto->buscarRegistro(); 
 
 				if ($registro === true) {
 					echo "
@@ -133,7 +137,7 @@
 
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registroLPD.php?buscar=Portaria&nomeTabela=portarias&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Decreto&nomeTabela=frentedecretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
@@ -146,7 +150,7 @@
 					</div>";				
 				}
 			}
-			?>			
+			?>		
 		</div>
 	</div>
 </div>

@@ -1,4 +1,8 @@
-<?php require_once("header.php") ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
 
 <style type="text/css">
 
@@ -23,8 +27,8 @@
 <div class="container-fluid bg-fundo">
 	<div class="row">
 		<div class="offset-md-2 col-12 col-md-2 col-lg-2">
-			<form action="buscar_decretos.php" method="post" class="py-4">
-				<input class="form-control" type="text" name="buscarDecreto" placeholder="Buscar Decretos" autocomplete="off" pattern="[0-9]+$">	
+			<form action="buscar_frenteleis.php" method="post" class="py-4">
+				<input class="form-control" type="text" name="buscarLei" placeholder="Buscar Leis" autocomplete="off" pattern="[0-9]+$">	
 				<div class="dropdown-divider"></div>
 				<button class="btn btn-primary">Buscar</button>
 			</form>
@@ -37,10 +41,10 @@
 			<?php 
 			require_once("../classes/Registros.php");
 
-			if ($_POST && $_POST['buscarDecreto'] === "") {
-				$todosOsDecretos = new Registros();
-				$todosOsDecretos->setTabela("decretos");
-				$registro = $todosOsDecretos->buscarTodosRegistros();	
+			if ($_POST && $_POST['buscarLei'] === "") {
+				$todasAsLeis = new Registros();
+				$todasAsLeis->setTabela("frenteleis");
+				$registro = $todasAsLeis->buscarTodosRegistros();	
 
 				if ($registro === true) {
 					echo "
@@ -55,7 +59,7 @@
 				else{
 					$suffix = "...";		
 
-					echo "<div class='col-12 bg-registros'>";					
+					echo "<div class='col-12 bg-registros'>";				
 
 					echo "
 					<table class='table table-striped' style='text-align: center;'>
@@ -67,7 +71,7 @@
 					<th>Nº Protocolo</th>
 					</tr>	
 					";
-					
+
 					for ($i=0; $i < count($registro); $i++) { 
 						$assunto = substr($registro[$i]['assunto'], 0, 150 + 1) . $suffix;
 						$data = date("d/m/Y", strtotime($registro[$i]['data_registro']));
@@ -75,27 +79,26 @@
 						$nmrRegistro = $registro[$i]['numero_registro'];
 						$anoRegistro = $registro[$i]['ano_registro'];
 
-
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registroLPD.php?buscar=Decreto&nomeTabela=decretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Lei&nomeTabela=frenteleis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
 						</tr>
 						";
 						
-					}
+					}	
 					echo "
 					</table>
-					</div>";
-				}					
-			}
-			else if ($_POST && $_POST['buscarDecreto'] != "") {
-				$buscarDecreto = new Registros();
-				$buscarDecreto->setTabela("decretos");
-				$buscarDecreto->setNmrRegistro($_POST['buscarDecreto']);
-				$registro = $buscarDecreto->buscarRegistro(); 
+					</div>";				
+				}
+			}					
+			else if ($_POST && $_POST['buscarLei'] != "") {
+				$todasAsLeis = new Registros();
+				$todasAsLeis->setTabela("frenteleis");
+				$todasAsLeis->setNmrRegistro($_POST['buscarLei']);
+				$registro = $todasAsLeis->buscarRegistro();	
 
 				if ($registro === true) {
 					echo "
@@ -103,7 +106,7 @@
 					<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 					<span aria-hidden='true'>&times;</span>
 					</button>
-					Não há nenhum cadastro com esse número de registro!
+					Não há nenhum registro com esse número cadastrado!
 					</div>
 					";					
 				}
@@ -133,7 +136,7 @@
 
 						echo "
 						<tr>
-						<td>"."<a href='buscar_registroLPD.php?buscar=Decreto&nomeTabela=decretos&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
+						<td>"."<a href='buscar_registroLPD.php?buscar=Lei&nomeTabela=frenteleis&nmrRegistro=$nmrRegistro&anoRegistro=$anoRegistro'>".$nmrRegistro."/".$anoRegistro."</a></td>
 						<td>".$data."</td>	
 						<td>".$assunto."</td>
 						<td>".$registro[$i]['numero_protocolo']."</td>
@@ -145,8 +148,8 @@
 					</table>
 					</div>";				
 				}
-			}
-			?>		
+			}					
+			?>			
 		</div>
 	</div>
 </div>

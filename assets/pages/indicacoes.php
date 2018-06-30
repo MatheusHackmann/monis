@@ -1,11 +1,15 @@
-<?php require_once("header.php"); ?>
+<?php 
+session_start();
+
+require_once("header.php") 
+?>
 
 <?php
 if ($_POST) {
 	require_once("../classes/Registros.php");
 	$cadastroDeIndicacao = new Registros();
 
-	$cadastroDeIndicacao->setTabela("indicacoes");
+	$cadastroDeIndicacao->setTabela("frenteindicacoes");
 	$cadastroDeIndicacao->setNmrRegistro($_POST['numero_indicacao']);
 	$cadastroDeIndicacao->setAnoRegistro($_POST['ano_indicacao']);
 	$registroExiste = $cadastroDeIndicacao->uploadPdf($_FILES['pdf']);
